@@ -9,7 +9,7 @@ public class MovementController : MonoBehaviour
 
     public bool TryMoveToTile( AreaTile tileToMoveTo )
     {
-        if( tileToMoveTo.OccupyingCharacter )
+        if( tileToMoveTo.OccupyingCharacter || !tileToMoveTo.IsWalkable )
         {
             return false;
 
@@ -36,9 +36,9 @@ public class MovementController : MonoBehaviour
 
         }
 
-        AreaTile tileToMoveTo = _areaMap.GridMap[targetTilePosition.x, targetTilePosition.y];
+        AreaTile targetTile = _areaMap.GridMap[targetTilePosition.x, targetTilePosition.y];
 
-        return TryMoveToTile( tileToMoveTo );
+        return TryMoveToTile( targetTile );
 
     }
 
