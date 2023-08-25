@@ -25,7 +25,7 @@ public class AreaMap : MonoBehaviour
             for( int y = 0; y < GridMap.Height; y++ )
             {
                 Vector3 worldPosition = GridMap.TileToWorldPosition( x, y );
-                Vector3Int localPosition = new Vector3Int( x, y );
+                Vector2Int localPosition = new Vector2Int( x, y );
 
                 GridMap[x, y] = new AreaTile( worldPosition, localPosition )
                 {
