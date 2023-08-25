@@ -5,6 +5,9 @@ public class MovementController : MonoBehaviour
     [SerializeField]
     private AreaMap _areaMap;
 
+    [SerializeField]
+    private Character _character;
+
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
     public bool TryMoveToTile( AreaTile tileToMoveTo )
@@ -15,7 +18,7 @@ public class MovementController : MonoBehaviour
 
         }
 
-        tileToMoveTo.OccupyingCharacter = CurrentTile.OccupyingCharacter;
+        tileToMoveTo.OccupyingCharacter = _character;
 
         CurrentTile.OccupyingCharacter = null;
 

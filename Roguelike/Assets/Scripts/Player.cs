@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character
@@ -13,7 +11,13 @@ public class Player : Character
         {
             if( _inputHandler.WASDAxis != Vector2.zero )
             {
-                TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
+                return TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
+       
+            }
+
+            if( Input.GetKeyDown( KeyCode.Space ) )
+            {
+                // skip turn
 
                 return true;
 

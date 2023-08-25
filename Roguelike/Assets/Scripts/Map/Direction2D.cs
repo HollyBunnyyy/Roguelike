@@ -58,19 +58,19 @@ public struct Direction2D
     public readonly static Direction2D Left         = new Direction2D( "Left",          new Vector2Int( -1,  0 ) );
     public readonly static Direction2D TopLeft      = new Direction2D( "TopLeft",       new Vector2Int( -1,  1 ) );
 
-    internal readonly static Direction2D[] DirectionsCardinal = new Direction2D[4]
+    public readonly static Direction2D[] DirectionsCardinal = new Direction2D[4]
     {
         Up, Right, Down, Left
 
     };
 
-    internal readonly static Direction2D[] DirectionsDiagonal = new Direction2D[4]
+    public readonly static Direction2D[] DirectionsDiagonal = new Direction2D[4]
     {
         TopRight, BottomRight, BottomLeft, TopLeft
 
     };
 
-    internal readonly static Direction2D[] DirectionsOrdinal = new Direction2D[8]
+    public readonly static Direction2D[] DirectionsOrdinal = new Direction2D[8]
     {
         Up, TopRight, Right, BottomRight, Down, BottomLeft, Left, TopLeft
 
