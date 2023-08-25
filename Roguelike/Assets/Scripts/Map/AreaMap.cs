@@ -27,11 +27,7 @@ public class AreaMap : MonoBehaviour
                 Vector3 worldPosition = GridMap.TileToWorldPosition( x, y );
                 Vector2Int localPosition = new Vector2Int( x, y );
 
-                GridMap[x, y] = new AreaTile( worldPosition, localPosition )
-                {
-                    Neighbors = new List<AreaTile>( GridMap.GetSurroundingTiles( x, y, DirectionType.Ordinal ))
-
-                };
+                GridMap[x, y] = new AreaTile( worldPosition, localPosition );
 
             }
         }

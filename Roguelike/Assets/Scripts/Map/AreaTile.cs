@@ -7,8 +7,6 @@ public class AreaTile
 
     public bool IsWalkable = true;
 
-    public List<AreaTile> Neighbors;
-
     public readonly Vector3     WorldPosition;
     public readonly Vector2Int  LocalPosition;
 

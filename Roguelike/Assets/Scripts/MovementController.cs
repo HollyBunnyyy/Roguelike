@@ -19,7 +19,10 @@ public class MovementController : MonoBehaviour
 
         CurrentTile.OccupyingCharacter = null;
 
-        transform.position = tileToMoveTo.WorldPosition;
+        Vector3 targetTilePosition = tileToMoveTo.WorldPosition;
+        targetTilePosition.z = transform.position.z;
+
+        transform.position = targetTilePosition;
 
         return true;
 
