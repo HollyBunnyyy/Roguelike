@@ -7,7 +7,7 @@ public class Player : Character
     [SerializeField]
     private InputHandler _inputHandler;
 
-    protected virtual void Update()
+    public override bool TurnAction()
     {
         if( Input.anyKeyDown )
         {
@@ -15,11 +15,16 @@ public class Player : Character
             {
                 TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
 
+                return true;
+
             }
 
         }
 
+        return false;
+
     }
+
 
 
 }

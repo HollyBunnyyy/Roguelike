@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MovementController
+public abstract class Character : MovementController, ITurnAgent
 {
-
-
+    public abstract bool TurnAction();
 
 }
