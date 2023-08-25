@@ -11,11 +11,18 @@ public class Player : Character
         {
             if( _inputHandler.WASDAxis != Vector2.zero )
             {
-                return TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
-       
+                TileFlag tileFlag = TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
+
+                Debug.Log( tileFlag );
+
+                if( tileFlag == TileFlag.WALKABLE )
+                {
+                    return true;
+
+                }
             }
 
-            if( Input.GetKeyDown( KeyCode.Space ) )
+            if( Input.GetKeyDown( KeyCode.Tilde ) )
             {
                 // skip turn
 

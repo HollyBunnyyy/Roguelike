@@ -11,6 +11,8 @@ public abstract class Character : MovementController, ITurnAgent
     {
         _turnHandler.AddAgent( this );
 
+        CurrentTile.OccupyingCharacter = this;
+
     }
 
 }

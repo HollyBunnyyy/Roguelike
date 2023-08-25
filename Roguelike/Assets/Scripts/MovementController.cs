@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum TileFlag
+{
+    WALKABLE,
+    UNWALKABLE,
+    OCCUPIED
+
+}
+
 public class MovementController : MonoBehaviour
 {
     [SerializeField]
@@ -10,35 +18,37 @@ public class MovementController : MonoBehaviour
 
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
-    public bool TryMoveToTile( AreaTile tileToMoveTo )
+    public TileFlag TryMoveToTile( AreaTile tileToMoveTo )
     {
-        if( tileToMoveTo.OccupyingCharacter || !tileToMoveTo.IsWalkable )
+        if( !tileToMoveTo.IsWalkable )
         {
-            return false;
+            return TileFlag.UNWALKABLE;
 
         }
 
-        tileToMoveTo.OccupyingCharacter = _character;
+        if( tileToMoveTo.OccupyingCharacter )
+        {
+            return TileFlag.OCCUPIED;
 
+        }
+
+        // Swap tile's occupying character
+        tileToMoveTo.OccupyingCharacter = _character;
         CurrentTile.OccupyingCharacter = null;
 
-        Vector3 targetTilePosition = tileToMoveTo.WorldPosition;
-        targetTilePosition.z = transform.position.z;
+        transform.position = tileToMoveTo.WorldPosition;
 
-        transform.position = targetTilePosition;
-
-        return true;
+        return TileFlag.WALKABLE;
 
     }
 
-
-    public bool TryMoveTowardsDirection( Vector2Int directionToMoveTowards )
+    public TileFlag TryMoveTowardsDirection( Vector2Int directionToMoveTowards )
     {
         Vector2Int targetTilePosition = CurrentTile.LocalPosition + directionToMoveTowards;
 
         if( !_areaMap.GridMap.IsIndexInMap( targetTilePosition.x, targetTilePosition.y ) )
         {
-            return false;
+            return TileFlag.UNWALKABLE;
 
         }
 
