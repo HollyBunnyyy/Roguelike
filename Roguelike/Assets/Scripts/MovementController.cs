@@ -33,8 +33,8 @@ public class MovementController : MonoBehaviour
         }
 
         // Swap tile's occupying character
-        tileToMoveTo.OccupyingCharacter = _character;
         CurrentTile.OccupyingCharacter = null;
+        tileToMoveTo.OccupyingCharacter = _character;
 
         transform.position = tileToMoveTo.WorldPosition;
 

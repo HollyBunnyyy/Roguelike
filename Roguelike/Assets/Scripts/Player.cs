@@ -15,14 +15,11 @@ public class Player : Character
 
                 Debug.Log( tileFlag );
 
-                if( tileFlag == TileFlag.WALKABLE )
-                {
-                    return true;
+                return true;
 
-                }
             }
 
-            if( Input.GetKeyDown( KeyCode.Tilde ) )
+            if( Input.GetKeyDown( KeyCode.Space ) )
             {
                 // skip turn
 

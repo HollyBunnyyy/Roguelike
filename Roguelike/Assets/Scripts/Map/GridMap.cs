@@ -226,4 +226,5 @@ public class GridMap<T>
         return Mathf.Sqrt( xNeighborDistance + yNeighborDistance );
 
     }
+
 }

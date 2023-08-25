@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class AreaTile
 {
-    public Character OccupyingCharacter;
-
     public bool IsWalkable = true;
+
+    public Character OccupyingCharacter;
 
     public readonly Vector3     WorldPosition;
     public readonly Vector2Int  LocalPosition;

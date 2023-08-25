@@ -15,6 +15,7 @@ public class DebugCharacter : Character
         {
             TryMoveTowardsDirection( _currentDirection = Direction2D.Opposite( _currentDirection ) );
 
+
         }
 
         return true;
