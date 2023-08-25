@@ -175,6 +175,35 @@ public class GridMap<T>
     }
 
     /// <summary>
+    /// A faster method to get the imediate surrounding tiles around the x and y index.
+    /// </summary>
+    public IEnumerable<T> GetSurroundingTiles( int xIndex, int yIndex, DirectionType directionType )
+    {
+        foreach( Direction2D direction in directionType )
+        {
+            int xNeighborIndex = xIndex + direction.X;
+            int yNeighborIndex = yIndex + direction.Y;
+
+            if( IsIndexInMap( xIndex, yIndex ) )
+            {
+                yield return this[xNeighborIndex, yNeighborIndex];
+
+            }
+        }
+    }
+
+    /// <summary>
+    /// A faster method to get the imediate surrounding tiles around the world position.
+    /// </summary>
+    public IEnumerable<T> GetSurroundingTiles( Vector3 worldPosition, DirectionType directionType )
+    {
+        Vector2Int positionToGrid = WorldToTilePosition( worldPosition );
+
+        return GetSurroundingTiles( positionToGrid.x, positionToGrid.y, directionType );
+
+    }
+
+    /// <summary>
     /// Calculates the distance between two points using right angles.
     /// </summary>
     public int CalculateManhattanDistance( int xStartingIndex, int yStartingIndex, int xTargetIndex, int yTargetIndex )
