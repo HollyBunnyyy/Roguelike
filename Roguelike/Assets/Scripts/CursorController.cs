@@ -30,7 +30,7 @@ public class CursorController : MonoBehaviour
 
         _selectedTile = _gridMap.GridMap.WorldToTile( _mousePosition );
 
-        if( _gridMap.GridMap.WorldToTile( _mousePosition ) == null )
+        if( _selectedTile == null )
         {
             return;
 
