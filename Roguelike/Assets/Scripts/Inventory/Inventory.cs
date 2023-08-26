@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Inventory<T>
 {
@@ -25,12 +26,21 @@ public class Inventory<T>
 
     }
 
+
+    /// <summary>
+    /// Checks if the given slot index is in range of the inventory's total slots available.
+    /// </summary>
+    /// <returns> * True if in range. </returns>
     public bool IsSlotIndexValid( int slotIndexToCheck )
     {
         return slotIndexToCheck >= 0 && slotIndexToCheck < MaxSize;
 
     }
 
+    /// <summary>
+    /// Attempts to add an object at the specified slot index.
+    /// </summary>
+    /// <returns> * True if inventory has enough space and the given object can be added. </returns>
     public bool TryAdd( T objectToAdd, int indexToInsertAt )
     {
         if( !IsSlotIndexValid( indexToInsertAt ) || !CanAddItems )
@@ -45,12 +55,22 @@ public class Inventory<T>
 
     }
 
+
+    /// <summary>
+    /// Attempts to add the given object to the next available slot.
+    /// </summary>
+    /// <returns> * True if inventory has enough space and the given object can be added.</returns>
     public bool TryAddLast( T objectToAdd )
     {
         return TryAdd( objectToAdd, _inventory.Count );
 
     }
 
+    /// <summary>
+    /// Attempts to remove the item assosciated with the given slot index.
+    /// </summary>
+    /// <remarks> Does not decrease the max size of the inventory. </remarks>
+    /// <returns> * True if the given slot index is valid. </returns>
     public bool TryRemove( int slotIndex )
     {
         if( !IsSlotIndexValid( slotIndex ) )
@@ -65,8 +85,13 @@ public class Inventory<T>
 
     }
 
+    /// <summary>
+    /// Increases the total maximum size of the inventory.
+    /// </summary>
     public void IncreaseTotalSize( int amountToIncrease )
     {
+        Debug.Log( "Test" );
+
         if( amountToIncrease <= 0 )
         {
             return;
@@ -77,11 +102,17 @@ public class Inventory<T>
 
     }
 
-    public IEnumerable<T> DecreaseTotalSize( int amountToDecrease )
+    /// <summary>
+    /// Decreases the total maximum size of the inventory. 
+    /// </summary>
+    /// <returns> * Returns an IEnumerable of any items that were removed. </returns>
+    public List<T> DecreaseTotalSize( int amountToDecrease )
     {
+        List<T> itemsRemoved = new List<T>();
+
         if( amountToDecrease <= 0 )
         {
-            yield break;
+            return itemsRemoved;
 
         }
 
@@ -93,6 +124,12 @@ public class Inventory<T>
 
         _maxSize -= amountToDecrease;
 
+        if( OccupiedCount <= 0 )
+        {
+            return itemsRemoved;
+
+        }
+
         for( int i = 0; i < amountToDecrease; i++ )
         {
             T objectOccupyingIndex = _inventory[^1];
@@ -101,9 +138,12 @@ public class Inventory<T>
             {
                 _inventory.Remove( objectOccupyingIndex );
 
-                yield return objectOccupyingIndex;
+                itemsRemoved.Add( objectOccupyingIndex );
 
             }
         }
+
+        return itemsRemoved;
+
     }
 }

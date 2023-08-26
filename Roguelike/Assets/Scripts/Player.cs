@@ -21,10 +21,7 @@ public class Player : Character
 
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
-                if( Inventory.CanAddItems )
-                {
-                    Debug.Log( Inventory.IsSlotIndexValid( 9 ) );
-                } 
+                Inventory.DecreaseTotalSize( 1 );
 
                 // skip turn
 
