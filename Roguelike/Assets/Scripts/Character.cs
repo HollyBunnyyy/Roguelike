@@ -5,6 +5,8 @@ public abstract class Character : MovementController, ITurnAgent
     [SerializeField]
     private TurnHandler _turnHandler;
 
+    public Inventory<int> Inventory = new Inventory<int>( 10 );
+
     public abstract bool TurnAction();
 
     protected virtual void Start()

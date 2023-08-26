@@ -21,6 +21,11 @@ public class Player : Character
 
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
+                if( Inventory.CanAddItems )
+                {
+                    Debug.Log( Inventory.IsSlotIndexValid( 9 ) );
+                } 
+
                 // skip turn
 
                 return true;
