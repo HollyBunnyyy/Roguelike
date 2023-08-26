@@ -1,13 +1,5 @@
 using UnityEngine;
 
-public enum TileFlags
-{
-    WALKABLE,
-    UNWALKABLE,
-    OCCUPIED
-
-}
-
 public class MovementController : MonoBehaviour
 {
     [SerializeField]
@@ -18,21 +10,19 @@ public class MovementController : MonoBehaviour
 
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
-    public TileFlags TryMoveToTile( AreaTile tileToMoveTo, out Character characterCollision )
+    public bool TryMoveToTile( AreaTile tileToMoveTo, out Character characterCollision )
     {
-        characterCollision = null;
+        characterCollision = tileToMoveTo.OccupyingCharacter;
 
         if( !tileToMoveTo.IsWalkable )
         {
-            return TileFlags.UNWALKABLE;
+            return false;
 
         }
 
         if( tileToMoveTo.OccupyingCharacter )
         {
-            characterCollision = tileToMoveTo.OccupyingCharacter;
-
-            return TileFlags.OCCUPIED;
+            return false;
 
         }
 
@@ -42,11 +32,11 @@ public class MovementController : MonoBehaviour
 
         transform.position = tileToMoveTo.WorldPosition;
 
-        return TileFlags.WALKABLE;
+        return true;
 
     }
 
-    public TileFlags TryMoveTowardsDirection( Vector2Int directionToMoveTowards, out Character characterCollision )
+    public bool TryMoveTowardsDirection( Vector2Int directionToMoveTowards, out Character characterCollision )
     {
         characterCollision = null;
 
@@ -54,7 +44,7 @@ public class MovementController : MonoBehaviour
 
         if( !_areaMap.GridMap.IsIndexInMap( targetTilePosition.x, targetTilePosition.y ) )
         {
-            return TileFlags.UNWALKABLE;
+            return false;
 
         }
 
