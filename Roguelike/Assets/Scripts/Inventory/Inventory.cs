@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Inventory<T>
 {
@@ -91,7 +92,7 @@ public class Inventory<T>
     {
         if( amountToIncrease <= 0 )
         {
-            return;
+            amountToIncrease = Mathf.Abs( amountToIncrease );
 
         }
 
@@ -105,17 +106,17 @@ public class Inventory<T>
     /// <returns> * Returns an IEnumerable of any items that were removed. </returns>
     public List<T> DecreaseTotalSize( int amountToDecrease )
     {
-        if( amountToDecrease > MaxSize )
+        if( amountToDecrease <= 0 )
         {
-            amountToDecrease = MaxSize;
+            amountToDecrease = Mathf.Abs( amountToDecrease );
 
         }
 
-        _maxSize -= amountToDecrease;
-
         List<T> itemsRemoved = new List<T>();
 
-        if( amountToDecrease >= 0 || OccupiedCount >= 0 )
+        _maxSize -= Mathf.Min( amountToDecrease, MaxSize );
+
+        if( OccupiedCount <= 0 )
         {
             for( int i = 0; i < amountToDecrease; i++ )
             {
