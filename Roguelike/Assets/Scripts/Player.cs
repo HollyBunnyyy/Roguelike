@@ -11,9 +11,13 @@ public class Player : Character
         {
             if( _inputHandler.WASDAxis != Vector2.zero )
             {
-                TileFlag tileFlag = TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ) );
+                TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ), out Character character );
 
-                Debug.Log( tileFlag );
+                if( character )
+                {
+                    character.Damage( 5.0f );
+
+                }
 
                 return true;
 

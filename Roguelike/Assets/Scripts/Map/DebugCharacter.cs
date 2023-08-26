@@ -13,7 +13,7 @@ public class DebugCharacter : Character
     {
         if( _shouldMove )
         {
-            TryMoveTowardsDirection( _currentDirection = Direction2D.Opposite( _currentDirection ) );
+            TryMoveTowardsDirection( _currentDirection = Direction2D.Opposite( _currentDirection ), out Character character );
 
 
         }

@@ -115,22 +115,19 @@ public class Inventory<T>
 
         List<T> itemsRemoved = new List<T>();
 
-        if( amountToDecrease <= 0 || OccupiedCount <= 0 )
+        if( amountToDecrease >= 0 || OccupiedCount >= 0 )
         {
-            return itemsRemoved;
-
-        }
-
-        for( int i = 0; i < amountToDecrease; i++ )
-        {
-            T objectOccupyingIndex = _inventory[^1];
-
-            if( objectOccupyingIndex != null )
+            for( int i = 0; i < amountToDecrease; i++ )
             {
-                _inventory.Remove( objectOccupyingIndex );
+                T objectOccupyingIndex = _inventory[^1];
 
-                itemsRemoved.Add( objectOccupyingIndex );
+                if( objectOccupyingIndex != null )
+                {
+                    _inventory.Remove( objectOccupyingIndex );
 
+                    itemsRemoved.Add( objectOccupyingIndex );
+
+                }
             }
         }
 

@@ -21,8 +21,6 @@ public class TurnHandler : MonoBehaviour
         {
             TurnAgents.RemoveFirst();
 
-            GetNextAgent();
-
             return;
 
         }

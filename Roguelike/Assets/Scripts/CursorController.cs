@@ -36,17 +36,17 @@ public class CursorController : MonoBehaviour
 
         }
 
-        if( !_selectedTile.OccupyingCharacter )
+        if( _selectedTile.OccupyingCharacter )
         {
-            transform.position = _mousePosition;
-            _cursorGraphic.Sprite = _unselected;
+            _cursorGraphic.Sprite = _highlight;
+            transform.position = _selectedTile.WorldPosition;
 
             return;
 
         }
 
-        _cursorGraphic.Sprite = _highlight;
-        transform.position = _selectedTile.WorldPosition;
+        transform.position = _mousePosition;
+        _cursorGraphic.Sprite = _unselected;
 
     }
 

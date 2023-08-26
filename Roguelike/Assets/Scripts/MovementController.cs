@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum TileFlag
+public enum TileFlags
 {
     WALKABLE,
     UNWALKABLE,
@@ -18,17 +18,21 @@ public class MovementController : MonoBehaviour
 
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
-    public TileFlag TryMoveToTile( AreaTile tileToMoveTo )
+    public TileFlags TryMoveToTile( AreaTile tileToMoveTo, out Character characterCollision )
     {
+        characterCollision = null;
+
         if( !tileToMoveTo.IsWalkable )
         {
-            return TileFlag.UNWALKABLE;
+            return TileFlags.UNWALKABLE;
 
         }
 
         if( tileToMoveTo.OccupyingCharacter )
         {
-            return TileFlag.OCCUPIED;
+            characterCollision = tileToMoveTo.OccupyingCharacter;
+
+            return TileFlags.OCCUPIED;
 
         }
 
@@ -38,23 +42,25 @@ public class MovementController : MonoBehaviour
 
         transform.position = tileToMoveTo.WorldPosition;
 
-        return TileFlag.WALKABLE;
+        return TileFlags.WALKABLE;
 
     }
 
-    public TileFlag TryMoveTowardsDirection( Vector2Int directionToMoveTowards )
+    public TileFlags TryMoveTowardsDirection( Vector2Int directionToMoveTowards, out Character characterCollision )
     {
+        characterCollision = null;
+
         Vector2Int targetTilePosition = CurrentTile.LocalPosition + directionToMoveTowards;
 
         if( !_areaMap.GridMap.IsIndexInMap( targetTilePosition.x, targetTilePosition.y ) )
         {
-            return TileFlag.UNWALKABLE;
+            return TileFlags.UNWALKABLE;
 
         }
 
         AreaTile targetTile = _areaMap.GridMap[targetTilePosition.x, targetTilePosition.y];
 
-        return TryMoveToTile( targetTile );
+        return TryMoveToTile( targetTile, out characterCollision );
 
     }
 
