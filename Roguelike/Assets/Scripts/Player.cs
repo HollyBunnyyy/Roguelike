@@ -21,8 +21,6 @@ public class Player : Character
 
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
-                Inventory.DecreaseTotalSize( 1 );
-
                 // skip turn
 
                 return true;

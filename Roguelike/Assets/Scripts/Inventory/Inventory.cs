@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Inventory<T>
 {
@@ -28,10 +27,10 @@ public class Inventory<T>
 
 
     /// <summary>
-    /// Checks if the given slot index is in range of the inventory's total slots available.
+    /// Checks if the given slot's index is in range of the inventory's total slots available.
     /// </summary>
     /// <returns> * True if in range. </returns>
-    public bool IsSlotIndexValid( int slotIndexToCheck )
+    public bool IsSlotValid( int slotIndexToCheck )
     {
         return slotIndexToCheck >= 0 && slotIndexToCheck < MaxSize;
 
@@ -43,7 +42,7 @@ public class Inventory<T>
     /// <returns> * True if inventory has enough space and the given object can be added. </returns>
     public bool TryAdd( T objectToAdd, int indexToInsertAt )
     {
-        if( !IsSlotIndexValid( indexToInsertAt ) || !CanAddItems )
+        if( !IsSlotValid( indexToInsertAt ) || !CanAddItems )
         {
             return false;
 
@@ -73,7 +72,7 @@ public class Inventory<T>
     /// <returns> * True if the given slot index is valid. </returns>
     public bool TryRemove( int slotIndex )
     {
-        if( !IsSlotIndexValid( slotIndex ) )
+        if( !IsSlotValid( slotIndex ) )
         {
             return false;
 
@@ -90,8 +89,6 @@ public class Inventory<T>
     /// </summary>
     public void IncreaseTotalSize( int amountToIncrease )
     {
-        Debug.Log( "Test" );
-
         if( amountToIncrease <= 0 )
         {
             return;
@@ -108,14 +105,6 @@ public class Inventory<T>
     /// <returns> * Returns an IEnumerable of any items that were removed. </returns>
     public List<T> DecreaseTotalSize( int amountToDecrease )
     {
-        List<T> itemsRemoved = new List<T>();
-
-        if( amountToDecrease <= 0 )
-        {
-            return itemsRemoved;
-
-        }
-
         if( amountToDecrease > MaxSize )
         {
             amountToDecrease = MaxSize;
@@ -124,7 +113,9 @@ public class Inventory<T>
 
         _maxSize -= amountToDecrease;
 
-        if( OccupiedCount <= 0 )
+        List<T> itemsRemoved = new List<T>();
+
+        if( amountToDecrease <= 0 || OccupiedCount <= 0 )
         {
             return itemsRemoved;
 
