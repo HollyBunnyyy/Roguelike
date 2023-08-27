@@ -1,25 +1,11 @@
 {
   "ItemTable": [
     {
-      "ID": "1000",
+      "ID": "1",
       "Name": "Test Item",
       "Sprite": "Test_Item.png",
       "Description": "Test Item for testing",
       "Rarity": 0
-    },
-    {
-      "ID": "1001",
-      "Name": "Test Item 2",
-      "Sprite": "Test_Item_2.png",
-      "Description": "Test Item for testing... 2!",
-      "Rarity": 1
-    },
-    {
-      "ID": "1002",
-      "Name": "Pee",
-      "Sprite": "Pee.png",
-      "Description": "???",
-      "Rarity": 4
     }
   ]
 }

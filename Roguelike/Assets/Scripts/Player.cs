@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class Player : Character
 {
     [SerializeField]
     private InputHandler _inputHandler;
+
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
 
     public override bool TurnAction()
     {
@@ -26,6 +31,10 @@ public class Player : Character
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
                 // skip turn
+
+
+
+
 
                 return true;
 
