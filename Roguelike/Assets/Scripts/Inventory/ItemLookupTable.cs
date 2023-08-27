@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemLookupTable : MonoBehaviour
@@ -9,11 +10,24 @@ public class ItemLookupTable : MonoBehaviour
 
     private ItemLookupArray _jsonItemArray;
 
-    protected virtual void Start()
+    private Dictionary<int, ItemMetaData> _itemLookuptable = new Dictionary<int, ItemMetaData>();
+
+    public ItemMetaData this[int itemId]
+    {
+        get => _itemLookuptable[itemId];
+        set => _itemLookuptable[itemId] = value;
+
+    }
+
+    protected virtual void Awake()
     {
         _jsonItemArray = JsonUtility.FromJson<ItemLookupArray>( _jsonItemTableAsset.text );
 
-        Debug.Log( _jsonItemArray.ItemTable[0].Description );
+        _itemLookuptable = _jsonItemArray.ItemTable.ToDictionary( key => key.ID, ItemMetaData => ItemMetaData );
+
+        Debug.Log( this[1].Description );
+
+
 
     }
 
