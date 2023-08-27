@@ -104,7 +104,7 @@ public class Inventory<T>
 
         List<T> itemsRemoved = new List<T>();
 
-        if( OccupiedCount >= 0 )
+        if( OccupiedCount > 0 )
         {
             for( int i = 1; i <= amountToDecrease; i++ )
             {
