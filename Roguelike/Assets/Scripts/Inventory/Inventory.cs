@@ -90,13 +90,7 @@ public class Inventory<T>
     /// </summary>
     public void IncreaseTotalSize( int amountToIncrease )
     {
-        if( amountToIncrease <= 0 )
-        {
-            amountToIncrease = Mathf.Abs( amountToIncrease );
-
-        }
-
-        _maxSize += amountToIncrease;
+        _maxSize += Mathf.Abs( amountToIncrease );
 
     }
 
@@ -106,21 +100,15 @@ public class Inventory<T>
     /// <returns> * Returns an IEnumerable of any items that were removed. </returns>
     public List<T> DecreaseTotalSize( int amountToDecrease )
     {
-        if( amountToDecrease <= 0 )
-        {
-            amountToDecrease = Mathf.Abs( amountToDecrease );
-
-        }
+        amountToDecrease = Mathf.Abs( amountToDecrease );
 
         List<T> itemsRemoved = new List<T>();
 
-        _maxSize -= Mathf.Min( amountToDecrease, MaxSize );
-
-        if( OccupiedCount <= 0 )
+        if( OccupiedCount >= 0 )
         {
-            for( int i = 0; i < amountToDecrease; i++ )
+            for( int i = 1; i <= amountToDecrease; i++ )
             {
-                T objectOccupyingIndex = _inventory[^1];
+                T objectOccupyingIndex = _inventory[_maxSize - i];
 
                 if( objectOccupyingIndex != null )
                 {
@@ -131,6 +119,8 @@ public class Inventory<T>
                 }
             }
         }
+
+        _maxSize -= amountToDecrease;
 
         return itemsRemoved;
 
