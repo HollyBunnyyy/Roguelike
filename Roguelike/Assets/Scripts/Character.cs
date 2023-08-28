@@ -9,10 +9,9 @@ public abstract class Character : MovementController, ITurnAgent
         get 
         { 
             return _health;
-
         }
 
-        set 
+        private set 
         {
             _health = value;
 

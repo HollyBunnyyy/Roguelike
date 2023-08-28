@@ -33,8 +33,15 @@ public class Player : Character
                 // skip turn
 
 
-                Debug.Log( Roguelike.Instance.ItemTable[0].Sprite ); 
+                Debug.Log( Roguelike.Instance.ItemTable[0].Sprite );
 
+                string itemPath = Roguelike.Instance.ItemTable[0].Sprite;
+
+                AsyncOperationHandle<Sprite> requestHandler = Addressables.LoadAssetAsync<Sprite>( itemPath );
+
+                Sprite sprite = requestHandler.WaitForCompletion();
+
+                _spriteRenderer.sprite = sprite;
 
                 return true;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Roguelike : MonoBehaviour
 {
     [SerializeField]
-    private TextAsset _itemTableJSONAsset;
+    private TextAsset _itemTableText;
 
     private ItemLookupTable _itemTable;
 
@@ -46,9 +46,13 @@ public class Roguelike : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _itemTableJSONAsset ??= Resources.Load<TextAsset>( "ItemTable" );
+        if( _itemTableText == null )
+        {
+            _itemTableText = Resources.Load<TextAsset>( "ItemTable" );
 
-        _itemTable = new ItemLookupTable( _itemTableJSONAsset );
+        }
+
+        _itemTable = new ItemLookupTable( _itemTableText );
 
     }
 
@@ -61,22 +65,3 @@ public class Roguelike : MonoBehaviour
     }
 
 }
-
-/*
- * 
- *             dfUnityOut = GameObject.FindObjectOfType<DaggerfallUnity>();
- * 
-        private void SetupSingleton()
-        {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-            {
-                if (Application.isPlaying)
-                {
-                    LogMessage("Multiple DaggerfallUnity instances detected in scene!", true);
-                    Destroy(gameObject);
-                }
-            }
-        }
-*/
