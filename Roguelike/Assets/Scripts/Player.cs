@@ -33,7 +33,7 @@ public class Player : Character
                 // skip turn
 
 
-
+                Debug.Log( Roguelike.Instance.ItemTable[0].Sprite ); 
 
 
                 return true;

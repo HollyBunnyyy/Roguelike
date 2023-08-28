@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: d234b49a3ab8fea48b6800e7c1fe62a9
   m_SerializeEntries:
   - m_GUID: 07190299bd359c54d90afcd5f14ffaa8
-    m_Address: Sprites/Sword.png
+    m_Address: Sword.png
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
