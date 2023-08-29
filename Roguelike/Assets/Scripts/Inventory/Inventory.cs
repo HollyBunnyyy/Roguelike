@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void InventoryDirtyHandler();
+
 public class Inventory<T> where T : class
 {
     public int MaxSize          => _maxSize;
@@ -8,9 +10,11 @@ public class Inventory<T> where T : class
     public int UnoccupiedCount  => MaxSize - OccupiedCount;
     public bool CanAddItems     => OccupiedCount < MaxSize;
 
-    private int _maxSize;
+    public event InventoryDirtyHandler OnCollectionDirty;
 
     private SortedDictionary<int, T> _items;
+
+    private int _maxSize;
 
     public Inventory( int maxSize )
     {
@@ -26,22 +30,32 @@ public class Inventory<T> where T : class
 
     }
 
+
+    /// <summary>
+    /// Checks whether the given slot index is in bounds of the Inventory's allowed maximum size.
+    /// </summary>
     public bool IsSlotIndexInInventory( int slotIndexToCheck )
     {
         return slotIndexToCheck >= 0 && slotIndexToCheck < MaxSize;
 
     }
 
+    /// <summary>
+    /// Checks whether the given slot index is currently occupied by an object.
+    /// </summary>
     public bool IsSlotIndexOccupied( int slotIndexToCheck )
     {
         return _items.ContainsKey( slotIndexToCheck );
 
-
     }
 
+    /// <summary>
+    /// Attempts to add the given item to the specified slot index. 
+    /// </summary>
+    /// <returns> * True if the slot is in bounds and not occupied. </returns>
     public bool TryAdd( int itemSlotIndex, T itemToAdd )
     {
-        if( IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) || !CanAddItems )
+        if( IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) )
         {
             return false;
 
@@ -49,10 +63,16 @@ public class Inventory<T> where T : class
 
         _items.Add( itemSlotIndex, itemToAdd );
 
+        OnCollectionDirty?.Invoke();
+
         return true;
 
     }
 
+    /// <summary>
+    /// Attemps to remove an item belonging to the given slot index.
+    /// </summary>
+    /// <returns> * True if the slot is in bounds and occupied.  </returns>
     public bool TryRemove( int itemSlotIndex, out T itemRemoved )
     {
         itemRemoved = null;
@@ -69,16 +89,54 @@ public class Inventory<T> where T : class
 
         _items.Remove( itemSlotIndex );
 
+        OnCollectionDirty?.Invoke();
+
         return true;
 
     }
 
+    /// <summary>
+    /// Attempts to swap two slot's objects with one another.
+    /// </summary>
+    /// <remarks> * Only works if both item slots have objects. </remarks>
+    public bool TrySwap( int itemSlotIndexA, int itemSlotIndexB )
+    {
+        if( !IsSlotIndexInInventory( itemSlotIndexA ) || !IsSlotIndexInInventory( itemSlotIndexB ) )
+        {
+            return false;
+
+        }
+
+        if( !IsSlotIndexOccupied( itemSlotIndexA ) || !IsSlotIndexOccupied( itemSlotIndexB ) )
+        {
+            return false;
+
+        }
+
+        // Swap values with tuple.
+        ( _items[itemSlotIndexB], _items[itemSlotIndexA] ) = ( _items[itemSlotIndexA], _items[itemSlotIndexB] );
+
+        OnCollectionDirty?.Invoke();
+
+        return true;
+
+    }
+
+    /// <summary>
+    /// Increases the max size of the inventory collection.
+    /// </summary>
     public void IncreaseTotalSize( int amountToIncrease )
     {
         _maxSize += Mathf.Abs( amountToIncrease );
 
+        OnCollectionDirty?.Invoke();
+
     }
 
+    /// <summary>
+    /// Decreases the max size of the inventory collection.
+    /// </summary>
+    /// <returns> * Returns a list of all items that were removed from the collection. </returns>
     public List<T> DecreaseTotalSize( int amountToDecrease )
     {
         amountToDecrease = Mathf.Min( _maxSize, Mathf.Abs( amountToDecrease ) );
@@ -101,133 +159,9 @@ public class Inventory<T> where T : class
 
         _maxSize -= amountToDecrease;
 
+        OnCollectionDirty?.Invoke();
+
         return itemsRemoved;
 
     }
 }
-
-/*
-    private int _maxSize;
-
-    private List<T> _inventory;
-
-    public int MaxSize          => _maxSize;
-    public int OccupiedCount    => _inventory.Count;
-    public int UnoccupiedCount  => MaxSize - OccupiedCount;
-    public bool CanAddItems     => OccupiedCount < MaxSize;
-
-    public Inventory( int maxSize )
-    {
-        this._maxSize = maxSize;
-        this._inventory = new List<T>();
-
-    }
-
-
-    public T this[int slotIndex]
-    {
-        get => _inventory[slotIndex];
-        set => _inventory[slotIndex] = value;
-
-    }
-
-
-    /// <summary>
-    /// Checks if the given slot's index is in range of the inventory's total slots available.
-    /// </summary>
-    /// <returns> * True if in range. </returns>
-    public bool IsSlotValid( int slotIndexToCheck )
-    {
-        return slotIndexToCheck >= 0 && slotIndexToCheck < MaxSize;
-
-    }
-
-    /// <summary>
-    /// Attempts to add an object at the specified slot index.
-    /// </summary>
-    /// <returns> * True if inventory has enough space and the given object can be added. </returns>
-    public bool TryAdd( T objectToAdd, int indexToInsertAt )
-    {
-        if( !IsSlotValid( indexToInsertAt ) || !CanAddItems )
-        {
-            return false;
-
-        }
-
-        _inventory.Insert( indexToInsertAt, objectToAdd );
-
-        return true;
-
-    }
-
-
-    /// <summary>
-    /// Attempts to add the given object to the next available slot.
-    /// </summary>
-    /// <returns> * True if inventory has enough space and the given object can be added.</returns>
-    public bool TryAddLast( T objectToAdd )
-    {
-        return TryAdd( objectToAdd, _inventory.Count );
-
-    }
-
-    /// <summary>
-    /// Attempts to remove the item assosciated with the given slot index.
-    /// </summary>
-    /// <remarks> Does not decrease the max size of the inventory. </remarks>
-    /// <returns> * True if the given slot index is valid. </returns>
-    public bool TryRemove( int slotIndex )
-    {
-        if( !IsSlotValid( slotIndex ) )
-        {
-            return false;
-
-        }
-
-        _inventory.RemoveAt( slotIndex );
-
-        return true;
-
-    }
-
-    /// <summary>
-    /// Increases the total maximum size of the inventory.
-    /// </summary>
-    public void IncreaseTotalSize( int amountToIncrease )
-    {
-        _maxSize += Mathf.Abs( amountToIncrease );
-
-    }
-
-    /// <summary>
-    /// Decreases the total maximum size of the inventory. 
-    /// </summary>
-    /// <returns> * Returns an IEnumerable of any items that were removed. </returns>
-    public List<T> DecreaseTotalSize( int amountToDecrease )
-    {
-        amountToDecrease = Mathf.Abs( amountToDecrease );
-
-        List<T> itemsRemoved = new List<T>();
-
-        if( OccupiedCount > 0 )
-        {
-            for( int i = 1; i <= amountToDecrease; i++ )
-            {
-                T objectOccupyingIndex = _inventory[_maxSize - i];
-
-                if( objectOccupyingIndex != null )
-                {
-                    _inventory.Remove( objectOccupyingIndex );
-
-                    itemsRemoved.Add( objectOccupyingIndex );
-
-                }
-            }
-        }
-
-        _maxSize -= amountToDecrease;
-
-        return itemsRemoved;
-
-    }
- */

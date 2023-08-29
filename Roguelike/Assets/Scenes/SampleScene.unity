@@ -6760,7 +6760,7 @@ MonoBehaviour:
   m_CellSize: {x: 16, y: 16}
   m_Spacing: {x: 2, y: 2}
   m_Constraint: 0
-  m_ConstraintCount: 2
+  m_ConstraintCount: 4
 --- !u!1 &1042513911
 GameObject:
   m_ObjectHideFlags: 0
@@ -7247,6 +7247,7 @@ MonoBehaviour:
   _character: {fileID: 2128681175}
   _health: 20
   _turnHandler: {fileID: 1486496694}
+  _inventoryUI: {fileID: 215363081}
   _inputHandler: {fileID: 1042513912}
   _spriteRenderer: {fileID: 2128681176}
 --- !u!212 &2128681176

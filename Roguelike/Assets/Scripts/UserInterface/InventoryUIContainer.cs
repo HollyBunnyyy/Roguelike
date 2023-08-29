@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO : implement object pooling. Heavy WIP for now.
+// TODO : implement object pooling.
 
 public class InventoryUIContainer : MonoBehaviour
 {
@@ -17,10 +17,6 @@ public class InventoryUIContainer : MonoBehaviour
 
     private List<InventoryUISlot> _inventorySlots = new List<InventoryUISlot>();
 
-    private int _previousInventoryMaxSize;
-
-    private bool _isInventoryDirty => _previousInventoryMaxSize != _character.Inventory.MaxSize;
-
     protected virtual void Awake()
     {
         for( int i = 0; i < 20; i++ )
@@ -33,15 +29,21 @@ public class InventoryUIContainer : MonoBehaviour
         }  
     }
 
-    protected virtual void Update()
+    protected virtual void Start()
     {
-        if( _isInventoryDirty )
-        {
-            _previousInventoryMaxSize = _character.Inventory.MaxSize;
+        SetCharacterInventoryToWatch( _character );
 
-            RedrawUI();
+    }
 
-        }
+    public void SetCharacterInventoryToWatch( Character characterToWatch )
+    {
+        // Remove our event hook from the previous character's inventory.
+        _character.Inventory.OnCollectionDirty -= RedrawUI;
+
+        this._character = characterToWatch;
+
+        // Add our event hook to the new character's inventory.
+        characterToWatch.Inventory.OnCollectionDirty += RedrawUI;
 
     }
 
@@ -49,7 +51,7 @@ public class InventoryUIContainer : MonoBehaviour
     {
         foreach( InventoryUISlot slot in _inventorySlots )
         {
-            slot.ClearImage();
+            slot.ResetImage();
             slot.gameObject.SetActive( false );
 
         }

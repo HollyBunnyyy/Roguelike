@@ -35,10 +35,12 @@ public class Player : Character
             {
                 // skip turn
 
-                Debug.Log( Inventory.TryAdd( 0, new Item( 0 ) ) );
+                foreach( Item item in Inventory.DecreaseTotalSize( 2 ) )
+                {
+                    Debug.Log( item.ID );
 
-                _inventoryUI.RedrawUI();
-
+                }
+                
                 return true;
 
             }
