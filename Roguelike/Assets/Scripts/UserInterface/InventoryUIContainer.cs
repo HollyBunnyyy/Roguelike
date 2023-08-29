@@ -19,6 +19,8 @@ public class InventoryUIContainer : MonoBehaviour
 
     protected virtual void Awake()
     {
+        // Pre-warming can be handled better with object pool.
+
         for( int i = 0; i < 20; i++ )
         {
             InventoryUISlot inventorySlotToInstantiate = Instantiate( _inventorySlotPrefab, _contentArea );
@@ -47,6 +49,8 @@ public class InventoryUIContainer : MonoBehaviour
 
     }
 
+    // UI speed will be increased greatly by not redrawing on EVERY IsDirty call from the inventory hook -
+    // I'll add flags later to the actual Delegate event and have a little more control. Works for now!
     public void RedrawUI()
     {
         foreach( InventoryUISlot slot in _inventorySlots )

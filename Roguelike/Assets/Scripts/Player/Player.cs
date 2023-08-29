@@ -46,12 +46,8 @@ public class Player : Character
             {
                 // skip turn
 
-                foreach( Item item in Inventory.DecreaseTotalSize( 2 ) )
-                {
-                    Debug.Log( item.ID );
+                Inventory.TrySwap( 0, 3 );
 
-                }
-                
                 return true;
 
             }

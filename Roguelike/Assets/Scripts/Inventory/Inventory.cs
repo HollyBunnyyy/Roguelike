@@ -26,8 +26,13 @@ public class Inventory<T> where T : class
     public T this[int slotIndex]
     {
         get => _items[slotIndex];
-        set => _items[slotIndex] = value;
+        set 
+        {
+            _items[slotIndex] = value;
 
+            OnCollectionDirty?.Invoke();
+
+        }
     }
 
 
@@ -55,7 +60,7 @@ public class Inventory<T> where T : class
     /// <returns> * True if the slot is in bounds and not occupied. </returns>
     public bool TryAdd( int itemSlotIndex, T itemToAdd )
     {
-        if( IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) )
+        if( IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) || itemToAdd == null )
         {
             return false;
 
@@ -107,14 +112,24 @@ public class Inventory<T> where T : class
 
         }
 
-        if( !IsSlotIndexOccupied( itemSlotIndexA ) || !IsSlotIndexOccupied( itemSlotIndexB ) )
+        if( !IsSlotIndexOccupied( itemSlotIndexA ) && !IsSlotIndexOccupied( itemSlotIndexB ) )
         {
+            // This is a useless operation if both given slot indexes are null.
+
             return false;
 
         }
 
-        // Swap values with tuple.
-        ( _items[itemSlotIndexB], _items[itemSlotIndexA] ) = ( _items[itemSlotIndexA], _items[itemSlotIndexB] );
+        // First, remove both items from the collection, as keys can't be updated.
+        // If one index has a null reference ( not occupied ), it will simply be skipped.
+        TryRemove( itemSlotIndexA, out T itemA );
+        TryRemove( itemSlotIndexB, out T itemB );
+
+        // Attemps to add both indexs back to the other's respective index position.
+        // TryAdd has a null check, so if any of the results above with TryRemove gave a null reference it will -
+        // simply be skipped and the other object will just be set to the given target index of the other.
+        TryAdd( itemSlotIndexA, itemB );
+        TryAdd( itemSlotIndexB, itemA );
 
         OnCollectionDirty?.Invoke();
 
