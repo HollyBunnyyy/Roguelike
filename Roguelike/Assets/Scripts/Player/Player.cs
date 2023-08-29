@@ -13,6 +13,17 @@ public class Player : Character
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        Inventory.TryAdd( 0, new Item( 120001 ) );
+        Inventory.TryAdd( 1, new Item( 120002 ) );
+        Inventory.TryAdd( 6, new Item( 120003 ) );
+
+
+    }
+
     public override bool TurnAction()
     {
         if( Input.anyKeyDown )

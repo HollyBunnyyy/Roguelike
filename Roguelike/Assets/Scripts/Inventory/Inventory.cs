@@ -143,17 +143,14 @@ public class Inventory<T> where T : class
 
         List<T> itemsRemoved = new List<T>();
 
-        if( OccupiedCount > 0 )
+        for( int i = 1; i <= amountToDecrease; i++ )
         {
-            for( int i = 1; i <= amountToDecrease; i++ )
+            int slotIndex = _maxSize - i;
+
+            if( TryRemove( slotIndex, out T itemRemoved ) )
             {
-                int slotIndex = _maxSize - i;
+                itemsRemoved.Add( itemRemoved );
 
-                if( TryRemove( slotIndex, out T itemRemoved ) )
-                {
-                    itemsRemoved.Add( itemRemoved );
-
-                }
             }
         }
 

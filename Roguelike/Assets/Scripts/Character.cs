@@ -37,10 +37,6 @@ public abstract class Character : MovementController, ITurnAgent
 
         TryMoveToTile( CurrentTile, out Character character );
 
-        Inventory.TryAdd( 1, new Item( 120001 ) );
-        Inventory.TryAdd( 2, new Item( 120002 ) );
-        Inventory.TryAdd( 6, new Item( 120003 ) );
-
     }
 
     public void Heal( float amountToHeal )
