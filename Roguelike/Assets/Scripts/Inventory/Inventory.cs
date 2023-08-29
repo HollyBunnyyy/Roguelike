@@ -103,7 +103,6 @@ public class Inventory<T> where T : class
     /// <summary>
     /// Attempts to swap two slot's objects with one another.
     /// </summary>
-    /// <remarks> * Only works if both item slots have objects. </remarks>
     public bool TrySwap( int itemSlotIndexA, int itemSlotIndexB )
     {
         if( !IsSlotIndexInInventory( itemSlotIndexA ) || !IsSlotIndexInInventory( itemSlotIndexB ) )
