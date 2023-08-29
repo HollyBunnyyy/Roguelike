@@ -39,21 +39,33 @@ public class InventoryUIContainer : MonoBehaviour
         {
             _previousInventoryMaxSize = _character.Inventory.MaxSize;
 
-            foreach( InventoryUISlot slot in _inventorySlots )
-            {
-                slot.gameObject.SetActive( false );
-
-            }
-
-            for( int i = 0; i < _character.Inventory.MaxSize; i++ )
-            {
-                _inventorySlots[i].gameObject.SetActive( true );
-
-            }
+            RedrawUI();
 
         }
 
     }
 
+    public void RedrawUI()
+    {
+        foreach( InventoryUISlot slot in _inventorySlots )
+        {
+            slot.ClearImage();
+            slot.gameObject.SetActive( false );
 
+        }
+
+        for( int i = 0; i < _character.Inventory.MaxSize; i++ )
+        {
+            _inventorySlots[i].gameObject.SetActive( true );
+
+            if( !_character.Inventory.IsSlotIndexOccupied( i ) )
+            {
+                continue;
+
+            }
+
+            _inventorySlots[i].TrySetImage( _character.Inventory[i].ID );
+
+        }
+    }
 }

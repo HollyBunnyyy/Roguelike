@@ -22,4 +22,20 @@ public class ItemLookupTable
 
     }
 
+    public bool IsIDValid( int idToValidate, out ItemMetaData itemdata )
+    {
+        itemdata = null;
+
+        if( !_itemLookuptable.ContainsKey( idToValidate ) )
+        {
+            return false;
+
+        }
+
+        itemdata = _itemLookuptable[idToValidate];
+
+        return true;
+
+    }
+
 }

@@ -5,6 +5,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class Player : Character
 {
     [SerializeField]
+    private InventoryUIContainer _inventoryUI;
+
+    [SerializeField]
     private InputHandler _inputHandler;
 
     [SerializeField]
@@ -32,16 +35,9 @@ public class Player : Character
             {
                 // skip turn
 
+                Debug.Log( Inventory.TryAdd( 0, new Item( 0 ) ) );
 
-                Debug.Log( Roguelike.Instance.ItemTable[0].Sprite );
-
-                string itemPath = Roguelike.Instance.ItemTable[0].Sprite;
-
-                AsyncOperationHandle<Sprite> requestHandler = Addressables.LoadAssetAsync<Sprite>( itemPath );
-
-                Sprite sprite = requestHandler.WaitForCompletion();
-
-                _spriteRenderer.sprite = sprite;
+                _inventoryUI.RedrawUI();
 
                 return true;
 

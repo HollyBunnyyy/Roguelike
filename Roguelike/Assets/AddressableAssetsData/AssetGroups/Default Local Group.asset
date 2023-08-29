@@ -21,6 +21,18 @@ MonoBehaviour:
     m_Address: Sword.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 07b6c8b0f94f3ae4f8e34d927853324d
+    m_Address: Debug_Items_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c5830f596c67b0a4bae1afe835d8a2b0
+    m_Address: Debug_Items_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 92e5af9ea993fe244be8900781d76716
+    m_Address: Debug_Items_0.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 49db073266898cf4e80342c4f1013c51, type: 2}
   m_SchemaSet:

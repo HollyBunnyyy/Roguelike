@@ -1,8 +1,112 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory<T>
+public class Inventory<T> where T : class
 {
+    public int MaxSize          => _maxSize;
+    public int OccupiedCount    => _items.Count;
+    public int UnoccupiedCount  => MaxSize - OccupiedCount;
+    public bool CanAddItems     => OccupiedCount < MaxSize;
+
+    private int _maxSize;
+
+    private SortedDictionary<int, T> _items;
+
+    public Inventory( int maxSize )
+    {
+        this._maxSize = maxSize;
+        this._items = new SortedDictionary<int, T>();
+
+    }
+
+    public T this[int slotIndex]
+    {
+        get => _items[slotIndex];
+        set => _items[slotIndex] = value;
+
+    }
+
+    public bool IsSlotIndexInInventory( int slotIndexToCheck )
+    {
+        return slotIndexToCheck >= 0 && slotIndexToCheck < MaxSize;
+
+    }
+
+    public bool IsSlotIndexOccupied( int slotIndexToCheck )
+    {
+        return _items.ContainsKey( slotIndexToCheck );
+
+
+    }
+
+    public bool TryAdd( int itemSlotIndex, T itemToAdd )
+    {
+        if( IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) || !CanAddItems )
+        {
+            return false;
+
+        }
+
+        _items.Add( itemSlotIndex, itemToAdd );
+
+        return true;
+
+    }
+
+    public bool TryRemove( int itemSlotIndex, out T itemRemoved )
+    {
+        itemRemoved = null;
+
+        if( !IsSlotIndexOccupied( itemSlotIndex ) || !IsSlotIndexInInventory( itemSlotIndex ) )
+        {
+            // nothing to remove at the given index.
+
+            return false;
+
+        }
+
+        itemRemoved = _items[itemSlotIndex];
+
+        _items.Remove( itemSlotIndex );
+
+        return true;
+
+    }
+
+    public void IncreaseTotalSize( int amountToIncrease )
+    {
+        _maxSize += Mathf.Abs( amountToIncrease );
+
+    }
+
+    public List<T> DecreaseTotalSize( int amountToDecrease )
+    {
+        amountToDecrease = Mathf.Min( _maxSize, Mathf.Abs( amountToDecrease ) );
+
+        List<T> itemsRemoved = new List<T>();
+
+        if( OccupiedCount > 0 )
+        {
+            for( int i = 1; i <= amountToDecrease; i++ )
+            {
+                int slotIndex = _maxSize - i;
+
+                if( TryRemove( slotIndex, out T itemRemoved ) )
+                {
+                    itemsRemoved.Add( itemRemoved );
+
+                }
+            }
+        }
+
+        _maxSize -= amountToDecrease;
+
+        return itemsRemoved;
+
+    }
+}
+
+/*
     private int _maxSize;
 
     private List<T> _inventory;
@@ -14,10 +118,11 @@ public class Inventory<T>
 
     public Inventory( int maxSize )
     {
-        this._inventory = new List<T>();
         this._maxSize = maxSize;
+        this._inventory = new List<T>();
 
     }
+
 
     public T this[int slotIndex]
     {
@@ -125,4 +230,4 @@ public class Inventory<T>
         return itemsRemoved;
 
     }
-}
+ */

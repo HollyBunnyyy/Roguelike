@@ -27,7 +27,7 @@ public abstract class Character : MovementController, ITurnAgent
     private TurnHandler _turnHandler;
 
     // TODO - will expand on inventory later, going to work on new features currently.
-    public Inventory<int> Inventory = new Inventory<int>( 10 );
+    public Inventory<Item> Inventory = new Inventory<Item>( 12 );
 
     public abstract bool TurnAction();
 
@@ -36,6 +36,10 @@ public abstract class Character : MovementController, ITurnAgent
         _turnHandler.AddAgent( this );
 
         TryMoveToTile( CurrentTile, out Character character );
+
+        Inventory.TryAdd( 1, new Item( 120001 ) );
+        Inventory.TryAdd( 2, new Item( 120002 ) );
+        Inventory.TryAdd( 6, new Item( 120003 ) );
 
     }
 
