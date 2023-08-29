@@ -26,15 +26,9 @@ public class Inventory<T> where T : class
     public T this[int slotIndex]
     {
         get => _items[slotIndex];
-        set 
-        {
-            _items[slotIndex] = value;
+        set => _items[slotIndex] = value;
 
-            OnCollectionDirty?.Invoke();
-
-        }
     }
-
 
     /// <summary>
     /// Checks whether the given slot index is in bounds of the Inventory's allowed maximum size.
