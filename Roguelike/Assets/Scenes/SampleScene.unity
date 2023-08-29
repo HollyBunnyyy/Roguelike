@@ -7250,6 +7250,8 @@ MonoBehaviour:
   _inventoryUI: {fileID: 215363081}
   _inputHandler: {fileID: 1042513912}
   _spriteRenderer: {fileID: 2128681176}
+  _testCharacter: {fileID: 1385516097}
+  _inventoryContainer: {fileID: 215363081}
 --- !u!212 &2128681176
 SpriteRenderer:
   m_ObjectHideFlags: 0

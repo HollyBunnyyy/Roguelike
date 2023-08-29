@@ -91,7 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graphic: {fileID: 7158453598482260566}
-  _itemID: 0
+  _slot: {fileID: 852190622588037925}
+  _container: {fileID: 0}
 --- !u!1 &6047424524331255857
 GameObject:
   m_ObjectHideFlags: 0

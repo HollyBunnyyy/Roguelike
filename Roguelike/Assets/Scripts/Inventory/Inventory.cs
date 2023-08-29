@@ -105,28 +105,23 @@ public class Inventory<T> where T : class
     /// </summary>
     public bool TrySwap( int itemSlotIndexA, int itemSlotIndexB )
     {
-        if( !IsSlotIndexInInventory( itemSlotIndexA ) || !IsSlotIndexInInventory( itemSlotIndexB ) )
-        {
-            return false;
-
-        }
-
-        if( !IsSlotIndexOccupied( itemSlotIndexA ) && !IsSlotIndexOccupied( itemSlotIndexB ) )
-        {
-            // This is a useless operation if both given slot indexes are null.
-
-            return false;
-
-        }
-
         // First, remove both items from the collection, as keys can't be updated.
         // If one index has a null reference ( not occupied ), it will simply be skipped.
         TryRemove( itemSlotIndexA, out T itemA );
         TryRemove( itemSlotIndexB, out T itemB );
 
-        // Attemps to add both indexs back to the other's respective index position.
+        if( itemA == null && itemB == null )
+        {
+            // Both given indexes returned a null reference, this method call can be skipped as
+            // there's no data to swap with the other index.
+
+            return false;
+
+        }
+
+        // Attemps to add both indexes back to the other's respective index position.
         // TryAdd has a null check, so if any of the results above with TryRemove gave a null reference it will -
-        // simply be skipped and the other object will just be set to the given target index of the other.
+        // simply be skipped and the other object will just be set to the index position of the other.
         TryAdd( itemSlotIndexA, itemB );
         TryAdd( itemSlotIndexB, itemA );
 
@@ -174,5 +169,30 @@ public class Inventory<T> where T : class
 
         return itemsRemoved;
 
+    }
+
+    /// <summary>
+    /// Returns an IEnumerable list of all currently occupied slots.
+    /// </summary>
+    public IEnumerable<int> GetOccupiedSlots()
+    {
+        return _items.Keys;
+    }
+
+    /// <summary>
+    /// Returns an IEnumerable list of all currently unoccupied slots.
+    /// </summary>
+    public IEnumerable<int> GetUnoccupiedSlots()
+    {
+        for( int i = 0; i < MaxSize; i++ )
+        {
+            if( IsSlotIndexOccupied( i ) )
+            {
+                continue;
+            }
+
+            yield return i;
+
+        }
     }
 }

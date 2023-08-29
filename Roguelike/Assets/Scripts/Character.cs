@@ -26,8 +26,7 @@ public abstract class Character : MovementController, ITurnAgent
     [SerializeField]
     private TurnHandler _turnHandler;
 
-    // TODO - will expand on inventory later, going to work on new features currently.
-    public Inventory<Item> Inventory = new Inventory<Item>( 12 );
+    public Inventory<Item> Inventory = new Inventory<Item>( 16 );
 
     public abstract bool TurnAction();
 

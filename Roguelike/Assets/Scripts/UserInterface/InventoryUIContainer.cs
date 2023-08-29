@@ -47,6 +47,8 @@ public class InventoryUIContainer : MonoBehaviour
         // Add our event hook to the new character's inventory.
         characterToWatch.Inventory.OnCollectionDirty += RedrawUI;
 
+        RedrawUI();
+
     }
 
     // UI speed will be increased greatly by not redrawing on EVERY IsDirty call from the inventory hook -

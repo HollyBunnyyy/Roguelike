@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class Player : Character
 {
@@ -13,14 +11,31 @@ public class Player : Character
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
+    [SerializeField]
+    private Character _testCharacter;
+
+    [SerializeField]
+    private InventoryUIContainer _inventoryContainer;
+
+    private Character characterToWatch;
+
     protected override void Start()
     {
         base.Start();
+
+        Inventory.IncreaseTotalSize( 4 );
 
         Inventory.TryAdd( 0, new Item( 120001 ) );
         Inventory.TryAdd( 1, new Item( 120002 ) );
         Inventory.TryAdd( 6, new Item( 120003 ) );
 
+        foreach( int slot in Inventory.GetUnoccupiedSlots() )
+        {
+            Debug.Log( slot );
+
+        }
+
+        Character characterToWatch = this;
 
     }
 
@@ -46,7 +61,9 @@ public class Player : Character
             {
                 // skip turn
 
-                Inventory.TrySwap( 0, 3 );
+                characterToWatch = ( characterToWatch == _testCharacter ) ? this : _testCharacter;
+
+                _inventoryContainer.SetCharacterInventoryToWatch( characterToWatch );
 
                 return true;
 

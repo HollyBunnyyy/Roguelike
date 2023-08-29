@@ -1,13 +1,18 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryUISlot : MonoBehaviour
+public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
     private Image _graphic;
 
+    [SerializeField]
+    private RectTransform _slot;
+
     private int _currentItemID;
     public int CurrentItemID => _currentItemID;
+
 
     /// <summary>
     /// Attempts to set the slot's image to the given item ID.
@@ -34,6 +39,27 @@ public class InventoryUISlot : MonoBehaviour
     public void ResetImage()
     {
         _graphic.sprite = null;
+
+    }
+
+    public void OnBeginDrag( PointerEventData eventData )
+    {
+        _graphic.transform.SetParent( transform.root );
+
+    }
+
+    public void OnDrag( PointerEventData eventData )
+    {
+        _graphic.transform.position = Input.mousePosition;
+
+    }
+
+    public void OnEndDrag( PointerEventData eventData )
+    {
+        Debug.Log( eventData.pointerEnter.name );
+
+        _graphic.transform.SetParent( _slot );
+        _graphic.transform.position = _slot.transform.position;
 
     }
 
