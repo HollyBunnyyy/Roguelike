@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public abstract class Character : MovementController, ITurnAgent
+public abstract class Character : Entity, ITurnAgent
 {
     [SerializeField]
     private float _health = 20.0f;
     public float Health 
     { 
-        get 
-        { 
-            return _health;
-        }
-
+        get { return _health; }
         private set 
         {
             _health = value;
@@ -34,7 +30,7 @@ public abstract class Character : MovementController, ITurnAgent
     {
         _turnHandler.AddAgent( this );
 
-        TryMoveToTile( CurrentTile, out Character character );
+        TryMoveToTile( CurrentTile, out Entity entityOccupying );
 
     }
 

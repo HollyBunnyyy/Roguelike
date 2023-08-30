@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaTile
 {
     public bool IsWalkable = true;
 
-    public Character OccupyingCharacter;
+    public Entity OccupyingEntity;
 
     public readonly Vector3     WorldPosition;
     public readonly Vector2Int  LocalPosition;

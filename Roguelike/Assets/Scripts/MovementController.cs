@@ -10,25 +10,19 @@ public class MovementController : MonoBehaviour
 
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
-    public bool TryMoveToTile( AreaTile tileToMoveTo, out Character characterCollision )
+    public bool TryMoveToTile( AreaTile tileToMoveTo, out Entity entityOccupying )
     {
-        characterCollision = tileToMoveTo.OccupyingCharacter;
+        entityOccupying = tileToMoveTo.OccupyingEntity;
 
-        if( !tileToMoveTo.IsWalkable )
-        {
-            return false;
-
-        }
-
-        if( tileToMoveTo.OccupyingCharacter )
+        if( !tileToMoveTo.IsWalkable || entityOccupying )
         {
             return false;
 
         }
 
         // Swap tile's occupying character
-        CurrentTile.OccupyingCharacter = null;
-        tileToMoveTo.OccupyingCharacter = _character;
+        CurrentTile.OccupyingEntity = null;
+        tileToMoveTo.OccupyingEntity = _character;
 
         transform.position = tileToMoveTo.WorldPosition;
 
@@ -36,9 +30,9 @@ public class MovementController : MonoBehaviour
 
     }
 
-    public bool TryMoveTowardsDirection( Vector2Int directionToMoveTowards, out Character characterCollision )
+    public bool TryMoveTowardsDirection( Vector2Int directionToMoveTowards, out Entity entityOccupying )
     {
-        characterCollision = null;
+        entityOccupying = null;
 
         Vector2Int targetTilePosition = CurrentTile.LocalPosition + directionToMoveTowards;
 
@@ -50,7 +44,7 @@ public class MovementController : MonoBehaviour
 
         AreaTile targetTile = _areaMap.GridMap[targetTilePosition.x, targetTilePosition.y];
 
-        return TryMoveToTile( targetTile, out characterCollision );
+        return TryMoveToTile( targetTile, out entityOccupying );
 
     }
 

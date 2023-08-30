@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,15 +20,20 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     /// </summary>
     public bool TrySetImage( int itemID )
     {
-        if( !Roguelike.Instance.ItemTable.IsIDValid( itemID, out ItemMetaData itemMetaData ) )
+        if( !Roguelike.Instance.TryGetIDMetaData( itemID, out ItemMetaData itemMetaData ) )
         {
             return false;
 
         }
 
-        _graphic.sprite = AssetManager.GetSpriteFromPath( itemMetaData.Sprite );
+        if( !Roguelike.Instance.TryGetSpriteFromPath( itemMetaData.Sprite, out Sprite sprite ) )
+        {
+            return false;
+
+        }
 
         _currentItemID = itemID;
+        _graphic.sprite = sprite;
 
         return true;
 

@@ -1,13 +1,8 @@
 using UnityEngine;
 
-// Trust me, I wouldn't use singleton patterns if I didn't have to.
-public class Roguelike : MonoBehaviour
+// TODO : Make GameManager class that inherits AssetManager - control logic will be for GameManager.
+public class Roguelike : AssetManager 
 {
-    [SerializeField]
-    private TextAsset _itemTableText;
-
-    private ItemLookupTable _itemTable;
-
     private static Roguelike _instance = null;
     public static Roguelike Instance
     {
@@ -35,24 +30,6 @@ public class Roguelike : MonoBehaviour
             return _instance;
 
         }
-
-    }
-
-    public ItemLookupTable ItemTable
-    {
-        get { return _itemTable; }
-    }
-
-
-    protected virtual void Awake()
-    {
-        if( _itemTableText == null )
-        {
-            _itemTableText = Resources.Load<TextAsset>( "ItemTable" );
-
-        }
-
-        _itemTable = new ItemLookupTable( _itemTableText );
 
     }
 

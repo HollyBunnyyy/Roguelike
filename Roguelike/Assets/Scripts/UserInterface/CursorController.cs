@@ -1,7 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class CursorController : MonoBehaviour
 {
+    [SerializeField]
+    private InventoryUIContainer _inventoryUI;
+
+    [SerializeField]
+    private TMP_Text _text;
+
     [SerializeField]
     private Camera _inputCamera;
 
@@ -21,6 +28,8 @@ public class CursorController : MonoBehaviour
 
     private Vector3 _mousePosition;
 
+    private Entity _currentEntity;
+
     protected virtual void Update()
     {
         _mousePosition = _inputCamera.ScreenToWorldPoint( Input.mousePosition );
@@ -34,10 +43,14 @@ public class CursorController : MonoBehaviour
 
         }
 
-        if( _selectedTile.OccupyingCharacter )
+        _currentEntity = _selectedTile.OccupyingEntity;
+
+        if( _currentEntity )
         {
             _cursorGraphic.Sprite = _highlight;
             transform.position = _selectedTile.WorldPosition;
+
+            _inventoryUI.SetInventoryToView( ( _currentEntity as Character ).Inventory );
 
             return;
 

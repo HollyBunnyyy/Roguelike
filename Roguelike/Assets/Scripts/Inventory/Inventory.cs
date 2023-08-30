@@ -119,7 +119,7 @@ public class Inventory<T> where T : class
         TryAdd( itemSlotIndexA, itemB );
         TryAdd( itemSlotIndexB, itemA );
 
-        OnCollectionDirty?.Invoke();
+        // The OnCollectionDirty event has already been run like 4 times with this operation, so it can be skipped.
 
         return true;
 

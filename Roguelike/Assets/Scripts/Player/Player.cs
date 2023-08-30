@@ -3,9 +3,6 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    private InventoryUIContainer _inventoryUI;
-
-    [SerializeField]
     private InputHandler _inputHandler;
 
     [SerializeField]
@@ -13,11 +10,6 @@ public class Player : Character
 
     [SerializeField]
     private Character _testCharacter;
-
-    [SerializeField]
-    private InventoryUIContainer _inventoryContainer;
-
-    private Character characterToWatch;
 
     protected override void Start()
     {
@@ -29,12 +21,6 @@ public class Player : Character
         Inventory.TryAdd( 1, new Item( 120002 ) );
         Inventory.TryAdd( 6, new Item( 120003 ) );
 
-        foreach( int slot in Inventory.GetUnoccupiedSlots() )
-        {
-            Debug.Log( slot );
-
-        }
-
         Character characterToWatch = this;
 
     }
@@ -45,11 +31,11 @@ public class Player : Character
         {
             if( _inputHandler.WASDAxis != Vector2.zero )
             {
-                TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ), out Character character );
+                TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ), out Entity entityHit );
 
-                if( character )
+                if( entityHit is Character )
                 {
-                    character.Damage( 5.0f );
+                    ( entityHit as Character ).Damage( 5.0f );
 
                 }
 
@@ -60,10 +46,6 @@ public class Player : Character
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
                 // skip turn
-
-                characterToWatch = ( characterToWatch == _testCharacter ) ? this : _testCharacter;
-
-                _inventoryContainer.SetCharacterInventoryToWatch( characterToWatch );
 
                 return true;
 
