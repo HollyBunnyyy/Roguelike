@@ -1,3 +1,4 @@
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,21 +16,14 @@ public class AssetManager : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if( _itemTableText == null )
-        {
-            _itemTableText = Resources.Load<TextAsset>( "ItemTable" );
-        }
-
-        if( _itemTableText == null )
-        {
-            _characterTableText = Resources.Load<TextAsset>( "CharacterTable" );
-        }
-
-        _itemTable = new ItemLookupTable( _itemTableText );
+        _itemTable      = new ItemLookupTable( _itemTableText );
         _characterTable = new CharacterLookupTable( _characterTableText );
 
     }
 
+    /// <summary>
+    /// Attempts to get the sprite from the given filePath.
+    /// </summary>
     public bool TryGetSpriteFromPath( string filePath, out Sprite sprite )
     {
         AsyncOperationHandle<Sprite> requestHandler = Addressables.LoadAssetAsync<Sprite>( filePath );
@@ -48,34 +42,21 @@ public class AssetManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Attempts to get the CharacterMetaData of the given ID.
+    /// </summary>
     public bool TryGetIDMetaData( int idToValidate, out CharacterMetaData characterData )
     {
-        characterData = null;
-
-        if( !_characterTable.HasID( idToValidate ) )
-        {
-            return false;
-        }
-
-        characterData = _characterTable[idToValidate];
-
-        return true;
+        return _characterTable.TryGetID( idToValidate, out characterData );
 
     }
 
+    /// <summary>
+    /// Attempts to get the ItemMetaData of the given ID.
+    /// </summary>
     public bool TryGetIDMetaData( int idToValidate, out ItemMetaData itemData )
     {
-        itemData = null;
-
-        if( !_itemTable.HasID( idToValidate ) )
-        {
-            return false;
-        }
-
-        itemData = _itemTable[idToValidate];
-
-        return true;
+        return _itemTable.TryGetID( idToValidate, out itemData );
 
     }
-
 }

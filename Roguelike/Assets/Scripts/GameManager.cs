@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+// Empty for now, will add game control logic later.
+
+public class GameManager : AssetManager
 {
 
 

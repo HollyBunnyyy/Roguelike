@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // JSON item data has to be mutable by default so the JSON parser can write to it, constructors are not used when they 
-// do this so, records as well can't use get init properties - I don't want devs or players to change metadata at runtime and so 
-// this class is both a lookup table and a way to convert JSON items to immutable record types of our desired ItemMetaData.
+// do this, records as well can't use { get; init; } properties - I don't want devs or players to change metadata at runtime so 
+// this class is both a lookup table and a way to convert JSON items to immutable record types of our desired MetaData.
 
-public class ItemLookupTable
+public class ItemLookupTable : ILookupTable<ItemMetaData>
 {
     private JSONItemLookupArray _jsonItemArray;
 
@@ -32,15 +32,25 @@ public class ItemLookupTable
         }
     }
 
-    public ItemMetaData this[int index]
-    {
-        get => _itemLookupTable[index];
-
-    }
-
     public bool HasID( int idToCheck )
     {
         return _itemLookupTable.ContainsKey( idToCheck );
+
+    }
+
+    public bool TryGetID( int id, out ItemMetaData itemMetaData )
+    {
+        itemMetaData = null;
+
+        if( !HasID( id ) )
+        {
+            return false;
+
+        }
+
+        itemMetaData = _itemLookupTable[id];
+
+        return true;
 
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // TODO : Make GameManager class that inherits AssetManager - control logic will be for GameManager.
-public class Roguelike : AssetManager 
+public class Roguelike : GameManager
 {
     private static Roguelike _instance = null;
     public static Roguelike Instance

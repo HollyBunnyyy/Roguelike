@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterLookupTable 
+public class CharacterLookupTable : ILookupTable<CharacterMetaData>
 {
     private JSONCharacterLookupArray _jsonCharacterTable;
 
@@ -32,15 +31,25 @@ public class CharacterLookupTable
         }
     }
 
-    public CharacterMetaData this[int index]
-    {
-        get => _characterLookupTable[index];
-
-    }
-
     public bool HasID( int idToCheck )
     {
         return _characterLookupTable.ContainsKey( idToCheck );
+
+    }
+
+    public bool TryGetID( int id, out CharacterMetaData characterMetaData )
+    {
+        characterMetaData = null;
+
+        if( !HasID( id ) )
+        {
+            return false;
+
+        }
+
+        characterMetaData = _characterLookupTable[id];
+
+        return true;
 
     }
 }
