@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Character : Entity, ITurnAgent
+public abstract class Character : TurnAgent
 {
     [SerializeField]
     private float _health = 20.0f;
@@ -23,8 +23,6 @@ public abstract class Character : Entity, ITurnAgent
     private TurnHandler _turnHandler;
 
     public Inventory<Item> Inventory = new Inventory<Item>( 16 );
-
-    public abstract bool TurnAction();
 
     protected virtual void Start()
     {

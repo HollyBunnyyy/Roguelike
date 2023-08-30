@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class TurnHandler : MonoBehaviour
 {
-    private LinkedList<Character> TurnAgents = new LinkedList<Character>();
+    private LinkedList<TurnAgent> TurnAgents = new LinkedList<TurnAgent>();
 
-    public Character CurrentAgent => TurnAgents.First.Value;
+    public TurnAgent CurrentAgent => TurnAgents.First.Value;
 
     public int Count => TurnAgents.Count;
 
@@ -33,9 +33,15 @@ public class TurnHandler : MonoBehaviour
 
     }
 
-    public Character GetNextAgent()
+    public TurnAgent GetNextAgent()
     {
-        LinkedListNode<Character> currentAgent = TurnAgents.First;
+        if( Count <= 0 )
+        {
+            return null;
+
+        }
+
+        LinkedListNode<TurnAgent> currentAgent = TurnAgents.First;
 
         TurnAgents.RemoveFirst();
         TurnAgents.AddLast( currentAgent );
@@ -44,20 +50,18 @@ public class TurnHandler : MonoBehaviour
 
     }
 
-    public void AddAgent( Character agentToAdd )
+    public void AddAgent( TurnAgent agentToAdd )
     {
         TurnAgents.AddLast( agentToAdd );
 
     }
 
-    public void RemoveAgent( Character agentToRemove )
+    public void RemoveAgent( TurnAgent agentToRemove )
     {
         if( TurnAgents.Contains( agentToRemove ) )
         {
             TurnAgents.Remove( agentToRemove );
 
         }
-
     }
-
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : AssetManager
 {
-
-
+    [SerializeField]
+    public TurnHandler TurnHandler;
 
 }
