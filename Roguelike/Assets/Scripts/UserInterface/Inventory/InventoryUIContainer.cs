@@ -42,6 +42,8 @@ public class InventoryUIContainer : MonoBehaviour
         // Add our event hook to the new inventory.
         inventoryToWatch.OnCollectionDirty += RedrawUI;
 
+        gameObject.SetActive( true );
+
         RedrawUI();
 
     }

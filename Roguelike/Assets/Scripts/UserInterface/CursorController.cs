@@ -1,18 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorController : MonoBehaviour
+public class CursorController : CursorListener
 {
     [SerializeField]
-    private AreaMap _gridMap;
+    private InventoryUIContainer _inventoryUIContainer;
 
-    private AreaTile _currentSelectedTile;
+    [SerializeField]
+    private CursorGraphicHandler _cursorGraphicHandler;
 
-    public AreaTile CurrentSelectedTile => _currentSelectedTile;
-    public Entity CurrentSelectedEntity => _currentSelectedTile.OccupyingEntity;
+    [SerializeField]
+    private Sprite _selectionSprite;
 
-    protected virtual void Update()
+    [SerializeField]
+    private Sprite _unselectedSprite;
+
+    protected void Update()
     {
-        _currentSelectedTile = _gridMap.GridMap.WorldToTile( Roguelike.Instance.InputHandler.MousePositionWorld );
+        if( CurrentSelectedEntity is Character )
+        {
+            _inventoryUIContainer.SetInventoryToView( ( CurrentSelectedEntity as Character ).Inventory );
+
+        }
 
     }
+
 }
