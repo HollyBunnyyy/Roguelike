@@ -11,12 +11,6 @@ public class TurnHandler : MonoBehaviour
 
     protected virtual void Update()
     {
-        if( Count <= 0 )
-        {
-            return;
-
-        }
-
         if( !CurrentAgent )
         {
             TurnAgents.RemoveFirst();

@@ -2,9 +2,16 @@ using UnityEngine;
 
 // Empty for now, will add game control logic later.
 
-public class GameManager : AssetManager
+[RequireComponent( typeof( TurnHandler ) )]
+public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    public TurnHandler TurnHandler;
+    private TurnHandler _turnHandler;
+    public TurnHandler TurnHandler => _turnHandler;
 
+    protected virtual void Awake()
+    {
+        _turnHandler = GetComponent<TurnHandler>();
+
+    }
 }

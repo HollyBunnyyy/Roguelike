@@ -16,6 +16,12 @@ public class MovementController : MonoBehaviour
 
     }
 
+    protected void OnDestroy()
+    {
+        CurrentTile.OccupyingEntity = null;
+
+    }
+
     public bool TryMoveToTile( AreaTile tileToMoveTo, out Entity entityOccupying )
     {
         entityOccupying = tileToMoveTo.OccupyingEntity;

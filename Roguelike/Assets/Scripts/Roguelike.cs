@@ -1,44 +1,53 @@
 using UnityEngine;
 
-// TODO : Make GameManager class that inherits AssetManager - control logic will be for GameManager.
-public class Roguelike : GameManager
+[RequireComponent( typeof( GameManager ), typeof( AssetManager ), typeof( InputHandler ) )]
+public class Roguelike : MonoBehaviour
 {
     private static Roguelike _instance = null;
-    public static Roguelike Instance
+    public static Roguelike Instance => FindRoguelikeUniqueInstance();
+
+    [SerializeField]
+    private GameManager _gameManager;
+    public GameManager GameManager => _gameManager;
+
+    [SerializeField]
+    private AssetManager _assetManager;
+    public AssetManager AssetManager => _assetManager;
+
+    [SerializeField]
+    private InputHandler _inputHandler;
+    public InputHandler InputHandler => _inputHandler;
+
+    protected virtual void Awake()
     {
-        get 
-        { 
-            if( _instance == null )
-            {
-                if( !FindRoguelikeUniqueInstance( out Roguelike roguelikeInstance ) )
-                {
-                    GameObject singletonGameObject = new GameObject()
-                    {
-                        name = "Roguelike"
+        _gameManager  = GetComponent<GameManager>();
+        _assetManager = GetComponent<AssetManager>();
+        _inputHandler = GetComponent<InputHandler>();
 
-                    };
+    }
 
-                    _instance = singletonGameObject.AddComponent<Roguelike>();
-
-                } else {
-                    _instance = roguelikeInstance;
-
-                }
-
-            }
-
+    public static Roguelike FindRoguelikeUniqueInstance()
+    {
+        if( _instance != null )
+        {
             return _instance;
 
         }
 
-    }
+        Roguelike roguelikeInstance = GameObject.FindObjectOfType<Roguelike>();
 
-    public static bool FindRoguelikeUniqueInstance( out Roguelike roguelikeInstance )
-    {
-        roguelikeInstance = GameObject.FindObjectOfType<Roguelike>();
+        if( !roguelikeInstance )
+        {
+            GameObject singletonGameObject = new GameObject() 
+            { 
+                name = "Roguelike" 
+            };
+
+            return _instance = singletonGameObject.AddComponent<Roguelike>();
+
+        }
 
         return roguelikeInstance;
 
     }
-
 }

@@ -27,7 +27,7 @@ public abstract class Character : TurnAgent
     {
         base.Start();
 
-        Roguelike.Instance.TurnHandler.AddAgent( this );
+        Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
 
     }
 
@@ -48,4 +48,5 @@ public abstract class Character : TurnAgent
         Destroy( gameObject );
 
     }
+
 }

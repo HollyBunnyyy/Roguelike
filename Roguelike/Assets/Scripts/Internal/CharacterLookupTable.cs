@@ -15,7 +15,7 @@ public class CharacterLookupTable : ILookupTable<CharacterMetaData>
         {
             JSONCharacterMetaData jsonItemToAdd = _jsonCharacterTable.CharacterTable[i];
 
-            Roguelike.Instance.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
+            Roguelike.Instance.AssetManager.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
 
             _characterLookupTable.Add( jsonItemToAdd.ID, new CharacterMetaData() 
             {

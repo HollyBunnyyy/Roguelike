@@ -3,9 +3,6 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    private InputHandler _inputHandler;
-
-    [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
     protected override void Start()
@@ -26,9 +23,9 @@ public class Player : Character
     {
         if( Input.anyKeyDown )
         {
-            if( _inputHandler.WASDAxis != Vector2.zero )
+            if( Roguelike.Instance.InputHandler.WASDAxis != Vector2.zero )
             {
-                TryMoveTowardsDirection( Vector2Int.RoundToInt( _inputHandler.WASDAxis ), out Entity entityHit );
+                TryMoveTowardsDirection( Vector2Int.RoundToInt( Roguelike.Instance.InputHandler.WASDAxis ), out Entity entityHit );
 
                 if( entityHit is Character )
                 {
