@@ -15,7 +15,18 @@ public class AssetManager : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _itemTable      = new ItemLookupTable( _itemTableText );
+        // I want to use the ternary operator ??= for assignment so bad... unfortunately unity overrides it :(
+        if( !_itemTableText )
+        {
+            _itemTableText = Resources.Load<TextAsset>( "ItemTable" );
+        }
+
+        if( !_characterTableText )
+        {
+            _characterTableText = Resources.Load<TextAsset>( "CharacterTable" );
+        }
+
+        _itemTable = new ItemLookupTable( _itemTableText );
         _characterTable = new CharacterLookupTable( _characterTableText );
 
     }

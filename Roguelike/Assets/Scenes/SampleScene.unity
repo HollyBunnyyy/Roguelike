@@ -8709,8 +8709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b203a40adb97b4408eb3a743d7e32af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryUI: {fileID: 215363081}
-  _inputCamera: {fileID: 519420031}
   _gridMap: {fileID: 967166126}
 --- !u!212 &1269496180
 SpriteRenderer:
@@ -8928,6 +8926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1671281351}
   _assetManager: {fileID: 1671281350}
+  _inputHandler: {fileID: 1671281349}
 --- !u!4 &1671281347
 Transform:
   m_ObjectHideFlags: 0
@@ -8968,6 +8967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputSettings: {fileID: 11400000, guid: 426b065a998388c448a001979371640e, type: 2}
+  _mainCamera: {fileID: 519420031}
 --- !u!114 &1671281350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8980,8 +8980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05db38b32940831449484d82d00ab942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemTableText: {fileID: 0}
-  _characterTableText: {fileID: 0}
+  _itemTableText: {fileID: 4900000, guid: 7680ddcbb24099447a89202bfb1664ad, type: 3}
+  _characterTableText: {fileID: 4900000, guid: 7e33e3af8701b1e4889828ffe4c49d3e, type: 3}
 --- !u!114 &1671281351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8994,7 +8994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a69c915883cad458d5f129a7a887e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputHandler: {fileID: 1671281349}
   _turnHandler: {fileID: 1671281348}
 --- !u!1 &2127031394
 GameObject:
@@ -9182,7 +9181,6 @@ MonoBehaviour:
   _entityToMove: {fileID: 2128681175}
   ID: 0
   _health: 20
-  _inputHandler: {fileID: 0}
   _spriteRenderer: {fileID: 2128681176}
 --- !u!212 &2128681176
 SpriteRenderer:
