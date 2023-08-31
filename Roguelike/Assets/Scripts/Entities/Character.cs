@@ -2,7 +2,7 @@ using UnityEngine;
 
 // TODO : Clean this class up and abstract.
 
-public abstract class Character : TurnAgent
+public class Character : Entity
 {
     [SerializeField]
     private float _health = 20.0f;
@@ -22,14 +22,6 @@ public abstract class Character : TurnAgent
     }
 
     public Inventory<Item> Inventory = new Inventory<Item>( 16 );
-
-    protected override void Start()
-    {
-        base.Start();
-
-        Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
-
-    }
 
     public void Heal( float amountToHeal )
     {

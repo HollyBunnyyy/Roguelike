@@ -518,7 +518,6 @@ GameObject:
   m_Component:
   - component: {fileID: 707752331}
   - component: {fileID: 707752330}
-  - component: {fileID: 707752329}
   - component: {fileID: 707752328}
   m_Layer: 0
   m_Name: Graphic
@@ -539,26 +538,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c76cf6cbf8399641bb30be00fbad7b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &707752329
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 707752327}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9838693948ddda64ea017a35928e000c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &707752330
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8689,7 +8668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269496181}
   - component: {fileID: 1269496180}
-  - component: {fileID: 1269496178}
+  - component: {fileID: 1269496182}
   m_Layer: 2
   m_Name: Cursor
   m_TagString: Untagged
@@ -8697,19 +8676,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1269496178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269496177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b203a40adb97b4408eb3a743d7e32af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gridMap: {fileID: 967166126}
 --- !u!212 &1269496180
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8778,6 +8744,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1269496182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269496177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2772dd382a5a54d822e65631d5fcda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridMap: {fileID: 967166126}
+  _inventoryUIContainer: {fileID: 215363081}
+  _cursorGraphicHandler: {fileID: 707752328}
+  _selectionSprite: {fileID: 21300000, guid: 4928ed1397ff31d49b0498a5cb66aa1c, type: 3}
+  _unselectedSprite: {fileID: 0}
 --- !u!1 &1397890204
 GameObject:
   m_ObjectHideFlags: 0

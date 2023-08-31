@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
+    public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
+
     [SerializeField]
     private AreaMap _areaMap;
 
     [SerializeField]
     private Entity _entityToMove;
 
-    public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
-
-    protected virtual void Start()
+    protected void Start()
     {
         TryMoveToTile( CurrentTile, out Entity entityOccupying );
 

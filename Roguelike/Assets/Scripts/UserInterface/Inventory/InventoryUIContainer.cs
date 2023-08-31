@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO : implement object pooling.
+// TODO : Make this code cleaner.
 
 public class InventoryUIContainer : MonoBehaviour
 {

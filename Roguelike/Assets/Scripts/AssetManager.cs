@@ -48,7 +48,7 @@ public class AssetManager : MonoBehaviour
 
         sprite = requestHandler.WaitForCompletion();
 
-        Addressables.ReleaseInstance( requestHandler );
+        Addressables.Release( requestHandler );
 
         return true;
 

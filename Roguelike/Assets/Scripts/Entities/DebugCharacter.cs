@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DebugCharacter : Character
+public class DebugCharacter : Character, ITurnAgent
 {
     [SerializeField]
     private int _maxInventorySize = 10;
@@ -10,15 +10,17 @@ public class DebugCharacter : Character
 
     private Direction2D _currentDirection = Direction2D.Right;
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         Inventory = new Inventory<Item>( _maxInventorySize );
 
         Inventory.TryAdd( 1, new Item( 120001 ) );
 
+        Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
+
     }
 
-    public override bool TurnAction()
+    public bool TurnAction()
     {
         if( _shouldMove )
         {

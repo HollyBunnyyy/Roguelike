@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class Player : Character
+public class Player : Character, ITurnAgent
 {
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
-    protected override void Start()
+    protected void Awake()
     {
-        base.Start();
-
         Inventory.IncreaseTotalSize( 4 );
 
         Inventory.TryAdd( 0, new Item( 120001 ) );
@@ -17,9 +15,11 @@ public class Player : Character
         Inventory.TryAdd( 12, new Item( 120003 ) );
         Inventory.TryAdd( 13, new Item( 120002 ) );
 
+        Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
+
     }
 
-    public override bool TurnAction()
+    public bool TurnAction()
     {
         if( Input.anyKeyDown )
         {

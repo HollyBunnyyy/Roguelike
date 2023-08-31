@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class TurnHandler : MonoBehaviour
 {
-    private LinkedList<TurnAgent> TurnAgents = new LinkedList<TurnAgent>();
+    private LinkedList<ITurnAgent> TurnAgents = new LinkedList<ITurnAgent>();
 
-    public TurnAgent CurrentAgent => TurnAgents.First.Value;
+    public ITurnAgent CurrentAgent => TurnAgents.First.Value;
 
     public int Count => TurnAgents.Count;
 
     protected virtual void Update()
     {
-        if( !CurrentAgent )
+        // == operator doesn't work here for some reason.
+        if( CurrentAgent.Equals( null ) )
         {
             TurnAgents.RemoveFirst();
 
@@ -27,7 +28,7 @@ public class TurnHandler : MonoBehaviour
 
     }
 
-    public TurnAgent GetNextAgent()
+    public ITurnAgent GetNextAgent()
     {
         if( Count <= 0 )
         {
@@ -35,7 +36,7 @@ public class TurnHandler : MonoBehaviour
 
         }
 
-        LinkedListNode<TurnAgent> currentAgent = TurnAgents.First;
+        LinkedListNode<ITurnAgent> currentAgent = TurnAgents.First;
 
         TurnAgents.RemoveFirst();
         TurnAgents.AddLast( currentAgent );
@@ -44,13 +45,13 @@ public class TurnHandler : MonoBehaviour
 
     }
 
-    public void AddAgent( TurnAgent agentToAdd )
+    public void AddAgent( ITurnAgent agentToAdd )
     {
         TurnAgents.AddLast( agentToAdd );
 
     }
 
-    public void RemoveAgent( TurnAgent agentToRemove )
+    public void RemoveAgent( ITurnAgent agentToRemove )
     {
         if( TurnAgents.Contains( agentToRemove ) )
         {
