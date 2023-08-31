@@ -43,7 +43,7 @@ public class Roguelike : MonoBehaviour
                 name = "Roguelike" 
             };
 
-            return _instance = singletonGameObject.AddComponent<Roguelike>();
+            roguelikeInstance = singletonGameObject.AddComponent<Roguelike>();
 
         }
 
