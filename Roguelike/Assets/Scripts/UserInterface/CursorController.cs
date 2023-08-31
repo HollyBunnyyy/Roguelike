@@ -50,7 +50,11 @@ public class CursorController : MonoBehaviour
             _cursorGraphic.Sprite = _highlight;
             transform.position = _selectedTile.WorldPosition;
 
-            _inventoryUI.SetInventoryToView( ( _currentEntity as Character ).Inventory );
+            if( _currentEntity is Character )
+            {
+                _inventoryUI.SetInventoryToView( ( _currentEntity as Character ).Inventory );
+
+            }
 
             return;
 

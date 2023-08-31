@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// TODO : Clean this class up and abstract.
+
 public abstract class Character : TurnAgent
 {
     [SerializeField]
@@ -19,16 +21,13 @@ public abstract class Character : TurnAgent
         }
     }
 
-    [SerializeField]
-    private TurnHandler _turnHandler;
-
     public Inventory<Item> Inventory = new Inventory<Item>( 16 );
 
-    protected virtual void Start()
+    protected override void Start()
     {
-        _turnHandler.AddAgent( this );
+        base.Start();
 
-        TryMoveToTile( CurrentTile, out Entity entityOccupying );
+        Roguelike.Instance.TurnHandler.AddAgent( this );
 
     }
 
@@ -49,5 +48,4 @@ public abstract class Character : TurnAgent
         Destroy( gameObject );
 
     }
-
 }

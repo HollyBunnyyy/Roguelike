@@ -28,6 +28,4 @@ public class DebugCharacter : Character
         return true;
 
     }
-
-
 }

@@ -52,4 +52,10 @@ public class CharacterLookupTable : ILookupTable<CharacterMetaData>
         return true;
 
     }
+
+    public int Count()
+    {
+        return _characterLookupTable.Count;
+
+    }
 }

@@ -6,9 +6,15 @@ public class MovementController : MonoBehaviour
     private AreaMap _areaMap;
 
     [SerializeField]
-    private Character _character;
+    private Entity _entityToMove;
 
     public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
+
+    protected virtual void Start()
+    {
+        TryMoveToTile( CurrentTile, out Entity entityOccupying );
+
+    }
 
     public bool TryMoveToTile( AreaTile tileToMoveTo, out Entity entityOccupying )
     {
@@ -22,7 +28,7 @@ public class MovementController : MonoBehaviour
 
         // Swap tile's occupying character
         CurrentTile.OccupyingEntity = null;
-        tileToMoveTo.OccupyingEntity = _character;
+        tileToMoveTo.OccupyingEntity = _entityToMove;
 
         transform.position = tileToMoveTo.WorldPosition;
 

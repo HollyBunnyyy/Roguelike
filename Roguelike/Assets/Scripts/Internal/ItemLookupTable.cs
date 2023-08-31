@@ -32,6 +32,12 @@ public class ItemLookupTable : ILookupTable<ItemMetaData>
         }
     }
 
+    public ItemMetaData this[int index]
+    {
+        get => _itemLookupTable[index];
+
+    }
+
     public bool HasID( int idToCheck )
     {
         return _itemLookupTable.ContainsKey( idToCheck );
@@ -51,6 +57,12 @@ public class ItemLookupTable : ILookupTable<ItemMetaData>
         itemMetaData = _itemLookupTable[id];
 
         return true;
+
+    }
+
+    public IEnumerable<int> GetKeys()
+    {
+        return _itemLookupTable.Keys;
 
     }
 }
