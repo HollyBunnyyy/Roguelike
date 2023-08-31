@@ -20,9 +20,18 @@ public class CursorController : CursorListener
     {
         if( CurrentSelectedEntity is Character )
         {
+            _cursorGraphicHandler.transform.position = CurrentSelectedTile.WorldPosition;
+            _cursorGraphicHandler.SetCursorSprite( _selectionSprite );
+
             _inventoryUIContainer.SetInventoryToView( ( CurrentSelectedEntity as Character ).Inventory );
+            _inventoryUIContainer.Enable();
+
+            return;
 
         }
+
+        _cursorGraphicHandler.SetCursorSprite( _unselectedSprite );
+        _inventoryUIContainer.Disable();
 
     }
 

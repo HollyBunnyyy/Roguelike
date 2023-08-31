@@ -18,6 +18,4 @@ public class CursorGraphicHandler : MonoBehaviour
         _spriteRenderer.sprite = spriteToSet;
 
     }
-
-
 }
