@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// TODO : add a way to show items on the ground - store them ( Inventory ) and allow the player to interact with them.
+
 public class AreaTile
 {
     public bool IsWalkable = true;

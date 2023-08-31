@@ -16,6 +16,8 @@ public class CursorController : CursorListener
     [SerializeField]
     private Sprite _unselectedSprite;
 
+    private Entity _previousCharacter;
+
     protected void Update()
     {
         if( CurrentSelectedEntity is Character )
@@ -23,7 +25,14 @@ public class CursorController : CursorListener
             _cursorGraphicHandler.transform.position = CurrentSelectedTile.WorldPosition;
             _cursorGraphicHandler.SetCursorSprite( _selectionSprite );
 
-            _inventoryUIContainer.SetInventoryToView( ( CurrentSelectedEntity as Character ).Inventory );
+            if( CurrentSelectedEntity != _previousCharacter )
+            {
+                _previousCharacter = CurrentSelectedEntity;
+
+                _inventoryUIContainer.SetInventoryToView( ( CurrentSelectedEntity as Character ).Inventory );
+
+            }
+
             _inventoryUIContainer.Enable();
 
             return;

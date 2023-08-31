@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,6 +14,8 @@ public class AssetManager : MonoBehaviour
 
     private ItemLookupTable _itemTable;
     private CharacterLookupTable _characterTable;
+
+    private Dictionary<string, AsyncOperationHandle<Sprite>> _asyncHandles = new Dictionary<string, AsyncOperationHandle<Sprite>>();
 
     protected virtual void Awake()
     {
@@ -36,19 +40,22 @@ public class AssetManager : MonoBehaviour
     /// </summary>
     public bool TryGetSpriteFromPath( string filePath, out Sprite sprite )
     {
-        AsyncOperationHandle<Sprite> requestHandler = Addressables.LoadAssetAsync<Sprite>( filePath );
-
         sprite = null;
 
-        if( requestHandler.Status == AsyncOperationStatus.Failed )
+        if( !_asyncHandles.ContainsKey( filePath ) )
         {
-            return false;
+            AsyncOperationHandle<Sprite> requestHandler = Addressables.LoadAssetAsync<Sprite>( filePath );
+
+            if( requestHandler.Status == AsyncOperationStatus.Failed )
+            {
+                return false;
+            }
+
+            _asyncHandles.Add( filePath, requestHandler );
 
         }
 
-        sprite = requestHandler.WaitForCompletion();
-
-        Addressables.Release( requestHandler );
+        sprite = _asyncHandles[filePath].WaitForCompletion();
 
         return true;
 
@@ -70,5 +77,16 @@ public class AssetManager : MonoBehaviour
     {
         return _itemTable.TryGetID( idToValidate, out itemData );
 
+    }
+
+    protected void OnDisable()
+    {       
+        // Unloads all data from disk.
+        // I'm sure addressables does it itself, but I'm always worried about leaks.
+
+        foreach( string asyncHandle in _asyncHandles.Keys )
+        {
+            Addressables.Release( _asyncHandles[asyncHandle] );
+        }
     }
 }
