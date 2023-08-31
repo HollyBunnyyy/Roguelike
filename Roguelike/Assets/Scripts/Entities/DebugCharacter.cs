@@ -14,6 +14,8 @@ public class DebugCharacter : Character
     {
         Inventory = new Inventory<Item>( _maxInventorySize );
 
+        Inventory.TryAdd( 1, new Item( 120001 ) );
+
     }
 
     public override bool TurnAction()

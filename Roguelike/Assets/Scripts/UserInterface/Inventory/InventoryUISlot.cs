@@ -26,14 +26,8 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         }
 
-        if( !Roguelike.Instance.TryGetSpriteFromPath( itemMetaData.Sprite, out Sprite sprite ) )
-        {
-            return false;
-
-        }
-
         _currentItemID = itemID;
-        _graphic.sprite = sprite;
+        _graphic.sprite = itemMetaData.Sprite;
 
         return true;
 

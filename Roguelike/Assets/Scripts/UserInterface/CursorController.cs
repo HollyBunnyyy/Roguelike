@@ -28,6 +28,7 @@ public class CursorController : MonoBehaviour
 
     private Vector3 _mousePosition;
 
+    private Entity _previousEntity;
     private Entity _currentEntity;
 
     protected virtual void Update()
@@ -50,13 +51,20 @@ public class CursorController : MonoBehaviour
             _cursorGraphic.Sprite = _highlight;
             transform.position = _selectedTile.WorldPosition;
 
-            if( _currentEntity is Character )
+            _inventoryUI.gameObject.SetActive( true );
+
+            if( ( _currentEntity is Character ) && ( _previousEntity != _currentEntity ))
             {
+                _previousEntity = _currentEntity;
+
                 _inventoryUI.SetInventoryToView( ( _currentEntity as Character ).Inventory );
 
-            }
+            } 
 
             return;
+
+        } else {
+            _inventoryUI.gameObject.SetActive( false );
 
         }
 

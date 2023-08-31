@@ -15,11 +15,13 @@ public class CharacterLookupTable : ILookupTable<CharacterMetaData>
         {
             JSONCharacterMetaData jsonItemToAdd = _jsonCharacterTable.CharacterTable[i];
 
+            Roguelike.Instance.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
+
             _characterLookupTable.Add( jsonItemToAdd.ID, new CharacterMetaData() 
             {
                 ID          = jsonItemToAdd.ID,
                 Name        = jsonItemToAdd.Name,
-                Sprite      = jsonItemToAdd.Sprite,
+                Sprite      = sprite,
                 Description = jsonItemToAdd.Description,
                 Heart       = jsonItemToAdd.Heart,
                 Ego         = jsonItemToAdd.Ego,

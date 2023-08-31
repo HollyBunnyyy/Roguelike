@@ -20,22 +20,18 @@ public class ItemLookupTable : ILookupTable<ItemMetaData>
         {
             JSONItemMetaData jsonItemToAdd = _jsonItemArray.ItemTable[i];
 
+            Roguelike.Instance.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
+
             _itemLookupTable.Add( jsonItemToAdd.ID, new ItemMetaData() 
             { 
                 ID          = jsonItemToAdd.ID,
                 Name        = jsonItemToAdd.Name,
-                Sprite      = jsonItemToAdd.Sprite,
+                Sprite      = sprite,
                 Description = jsonItemToAdd.Description,
                 Rarity      = jsonItemToAdd.Rarity
                          
             } );
         }
-    }
-
-    public ItemMetaData this[int index]
-    {
-        get => _itemLookupTable[index];
-
     }
 
     public bool HasID( int idToCheck )

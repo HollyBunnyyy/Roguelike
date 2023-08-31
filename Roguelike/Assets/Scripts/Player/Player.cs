@@ -8,9 +8,6 @@ public class Player : Character
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]
-    private Character _testCharacter;
-
     protected override void Start()
     {
         base.Start();
@@ -20,8 +17,8 @@ public class Player : Character
         Inventory.TryAdd( 0, new Item( 120001 ) );
         Inventory.TryAdd( 1, new Item( 120002 ) );
         Inventory.TryAdd( 6, new Item( 120003 ) );
-
-        Character characterToWatch = this;
+        Inventory.TryAdd( 12, new Item( 120003 ) );
+        Inventory.TryAdd( 13, new Item( 120002 ) );
 
     }
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -36,7 +35,9 @@ public class AssetManager : MonoBehaviour
 
         }
 
-        sprite = requestHandler.Result;
+        sprite = requestHandler.WaitForCompletion();
+
+        Addressables.ReleaseInstance( requestHandler );
 
         return true;
 
