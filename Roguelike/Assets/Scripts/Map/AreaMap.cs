@@ -13,6 +13,8 @@ public class AreaMap : MonoBehaviour
         _tileMap.CompressBounds();
 
         GridMap = new GridMap<AreaTile>( 
+            _tileMap.origin.x,
+            _tileMap.origin.y,
             _tileMap.size.x, 
             _tileMap.size.y, 
             _tileMap.cellSize, 
@@ -29,5 +31,9 @@ public class AreaMap : MonoBehaviour
 
             }
         }
+
+        Debug.Log( GridMap.TileToWorldPosition( 0, 0 ) );
+        
+
     }
 }

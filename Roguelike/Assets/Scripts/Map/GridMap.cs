@@ -9,6 +9,8 @@ public enum RadiusShape
 
 }
 
+//CellCenter - new Vector2( Width * CellCenter.x, Height * CellCenter.y )
+
 public class GridMap<T>
 {
     public readonly int Width;
@@ -16,10 +18,10 @@ public class GridMap<T>
 
     public readonly Vector2 CellGap;
     public readonly Vector2 CellSize;
+    public readonly Vector2 Origin;
 
     public Vector2 CellArea     => CellSize + CellGap;
     public Vector2 CellCenter   => CellArea / 2.0f;
-    public Vector2 Origin       => new Vector2( Width * CellCenter.x, Height * CellCenter.y ) - CellCenter;
 
     public int Size => Width * Height;
 
@@ -32,12 +34,13 @@ public class GridMap<T>
 
     }
 
-    public GridMap( int width, int height, Vector2 cellSize, Vector2 cellGap )
+    public GridMap( float startX, float startY, int width, int height, Vector2 cellSize, Vector2 cellGap )
     {
         this.Width      = width;
         this.Height     = height;
         this.CellGap    = cellGap;
         this.CellSize   = cellSize;
+        this.Origin     = new Vector2( startX, startY ) + CellCenter;
 
         this._tileGrid = new T[width, height];
 
@@ -67,8 +70,8 @@ public class GridMap<T>
     {
         Vector2Int tilePositionOnGrid = new Vector2Int()
         {
-            x = Mathf.RoundToInt( ( worldPosition.x + Origin.x ) / CellArea.x ),
-            y = Mathf.RoundToInt( ( worldPosition.y + Origin.y ) / CellArea.y )
+            x = Mathf.RoundToInt( ( worldPosition.x - Origin.x ) / CellArea.x ),
+            y = Mathf.RoundToInt( ( worldPosition.y - Origin.y ) / CellArea.y )
 
         };
 
@@ -81,7 +84,7 @@ public class GridMap<T>
     /// </summary>
     public Vector3 TileToWorldPosition( int xIndex, int yIndex )
     {
-        return new Vector2( xIndex, yIndex ) - Origin;
+        return new Vector2( xIndex, yIndex ) + Origin;
 
     }
 
@@ -116,7 +119,6 @@ public class GridMap<T>
                 if( x == 0 && y == 0 )
                 {
                     continue;
-
                 }
 
                 int xNeighborIndex = xIndex + x;
@@ -129,26 +131,17 @@ public class GridMap<T>
                 {
                     case RadiusShape.DIAMOND:
                         if( CalculateManhattanDistance( xIndex, yIndex, xNeighborIndex, yNeighborIndex ) > radius )
-                        {
                             continue;
-
-                        }
-
                         break;
 
                     case RadiusShape.CIRCLE:
                         if( CalculateEuclideanDistance( xIndex, yIndex, xNeighborIndex, yNeighborIndex ) > radius + 0.41f )
-                        {
                             continue;
-
-                        }
-
                         break;
 
                     case RadiusShape.SQUARE:
                         // The default behaviour already calculates all neighbors in a square, so you won't see the square shape
                         // have any extra logic or implementation.
-
                         break;
 
                 }
@@ -157,7 +150,6 @@ public class GridMap<T>
                 if( IsIndexInMap( xNeighborIndex, yNeighborIndex ) )
                 {
                     yield return this[xNeighborIndex, yNeighborIndex];
-
                 }
             }
         }
