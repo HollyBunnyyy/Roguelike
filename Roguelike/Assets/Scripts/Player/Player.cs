@@ -27,6 +27,12 @@ public class Player : Character, ITurnAgent
             {
                 TryMoveTowardsDirection( Vector2Int.RoundToInt( Roguelike.Instance.InputHandler.WASDAxis ), out Entity entityHit );
 
+                if( CurrentTile.OccupyingItems.OccupiedCount != 0 )
+                {
+                    Debug.Log( CurrentTile.OccupyingItems[0].ID );
+
+                }
+
                 if( entityHit is Character )
                 {
                     ( entityHit as Character ).Damage( 5.0f );
@@ -40,6 +46,15 @@ public class Player : Character, ITurnAgent
             if( Input.GetKeyDown( KeyCode.Space ) )
             {
                 // skip turn
+
+                if( CurrentTile.OccupyingItems.OccupiedCount != 0 )
+                {
+                    CurrentTile.OccupyingItems.TryRemove( 0, out Item itemRemoved );
+
+                    Inventory.TryAdd( 2, itemRemoved );
+
+                }
+
 
                 return true;
 

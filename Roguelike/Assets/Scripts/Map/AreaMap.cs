@@ -29,11 +29,18 @@ public class AreaMap : MonoBehaviour
 
                 GridMap[x, y] = new AreaTile( worldPosition, localPosition );
 
+                if( x == 5 && y == 5 )
+                {
+                    GridMap[x, y].OccupyingItems.TryAdd( 0, new Item( 120003 ) );
+
+                }
+
+                if( !_tileMap.GetTile( new Vector3Int( x, y ) + _tileMap.origin  ))
+                {
+                    GridMap[x, y].IsWalkable = false;
+                }
+
             }
         }
-
-        Debug.Log( GridMap.TileToWorldPosition( 0, 0 ) );
-        
-
     }
 }
