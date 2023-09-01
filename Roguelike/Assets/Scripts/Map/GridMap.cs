@@ -9,8 +9,6 @@ public enum RadiusShape
 
 }
 
-//CellCenter - new Vector2( Width * CellCenter.x, Height * CellCenter.y )
-
 public class GridMap<T>
 {
     public readonly int Width;
@@ -18,10 +16,9 @@ public class GridMap<T>
 
     public readonly Vector2 CellGap;
     public readonly Vector2 CellSize;
+    public readonly Vector2 CellArea;
+    public readonly Vector2 CellCenter;
     public readonly Vector2 Origin;
-
-    public Vector2 CellArea     => CellSize + CellGap;
-    public Vector2 CellCenter   => CellArea / 2.0f;
 
     public int Size => Width * Height;
 
@@ -40,6 +37,8 @@ public class GridMap<T>
         this.Height     = height;
         this.CellGap    = cellGap;
         this.CellSize   = cellSize;
+        this.CellArea   = CellSize + CellGap;
+        this.CellCenter = CellArea / 2.0f;
         this.Origin     = new Vector2( startX, startY ) + CellCenter;
 
         this._tileGrid = new T[width, height];
