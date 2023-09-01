@@ -9,7 +9,8 @@ public class AreaTile
 
     public Entity OccupyingEntity = null;
 
-    // Debug for now.
+    private EntityPawn _entityPawn;
+
     public Inventory<Item> OccupyingItems = new Inventory<Item>( 2 );
 
     public readonly Vector3     WorldPosition;
@@ -20,6 +21,30 @@ public class AreaTile
         this.WorldPosition = worldPosition;
         this.LocalPosition = localPosition;
 
+        OccupyingItems.OnCollectionDirty += FillTile;
+
     }
 
+    // I'm sure this can be handled better, for now it's debug.
+    private void FillTile()
+    {
+        if( OccupyingItems.HasItems )
+        {
+            if( !_entityPawn )
+            {
+                _entityPawn = Roguelike.Instance.AssetManager.GetBlankPawn( WorldPosition );
+
+                Roguelike.Instance.AssetManager.TryGetSpriteFromPath( "Debug_Items_2.png", out Sprite sprite );
+
+                _entityPawn.SetEntityToDisplay( sprite );
+
+            }
+
+            return;
+
+        }
+
+        _entityPawn?.Disable();
+
+    }
 }

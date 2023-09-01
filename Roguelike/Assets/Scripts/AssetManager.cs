@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,6 +10,9 @@ public class AssetManager : MonoBehaviour
 
     [SerializeField]
     private TextAsset _characterTableText;
+
+    [SerializeField]
+    private EntityPawnPool _entityPawnPool;
 
     private ItemLookupTable _itemTable;
     private CharacterLookupTable _characterTable;
@@ -59,6 +61,14 @@ public class AssetManager : MonoBehaviour
 
         return true;
 
+    }
+
+    public EntityPawn GetBlankPawn( Vector3 positionToSpawn )
+    {
+        EntityPawn entityPawn = _entityPawnPool.GetNext();
+        entityPawn.transform.position = positionToSpawn;   
+
+        return entityPawn;
     }
 
     /// <summary>

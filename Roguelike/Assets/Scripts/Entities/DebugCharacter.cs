@@ -26,7 +26,6 @@ public class DebugCharacter : Character, ITurnAgent
         {
             TryMoveTowardsDirection( _currentDirection = Direction2D.Opposite( _currentDirection ), out Entity entityHit );
 
-
         }
 
         return true;

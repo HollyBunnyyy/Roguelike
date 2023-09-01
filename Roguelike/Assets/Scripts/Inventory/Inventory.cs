@@ -8,6 +8,7 @@ public class Inventory<T> where T : class
     public int MaxSize          => _maxSize;
     public int OccupiedCount    => _items.Count;
     public int UnoccupiedCount  => MaxSize - OccupiedCount;
+    public bool HasItems        => OccupiedCount > 0;
     public bool CanAddItems     => OccupiedCount < MaxSize;
 
     public event InventoryDirtyHandler OnCollectionDirty;
