@@ -4,12 +4,17 @@ using UnityEngine;
 public class EntityPool : MonoBehaviour, IObjectPool<Entity>
 {
     [SerializeField]
-    private int _amountToPrewarm;
+    private int _amountToPrewarm = 5;
 
     private Queue<Entity> _entityPool = new Queue<Entity>();
 
     protected void Awake()
     {
+        if( _entityPool.Count > 0 )
+        {
+            return;
+        }
+
         _amountToPrewarm = Mathf.Abs( _amountToPrewarm );
 
         for( int i = 0; i < _amountToPrewarm; i++ )
@@ -28,7 +33,6 @@ public class EntityPool : MonoBehaviour, IObjectPool<Entity>
         }
 
         Entity entityPawnToRelease = _entityPool.Dequeue();
-        entityPawnToRelease.Enable();
 
         return entityPawnToRelease;
 
@@ -49,11 +53,7 @@ public class EntityPool : MonoBehaviour, IObjectPool<Entity>
     {
         Entity pawnToInstantiate = new GameObject( "BlankEntity" ).AddComponent<Entity>();
         pawnToInstantiate.transform.SetParent( transform );
-        pawnToInstantiate.TryBindToPool( this );
 
         ReturnToPool( pawnToInstantiate );
-
-        pawnToInstantiate.Disable();
-
     }
 }

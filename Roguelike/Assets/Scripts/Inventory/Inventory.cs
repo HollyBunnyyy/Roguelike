@@ -106,10 +106,15 @@ public class Inventory<T> where T : class
             return null; 
         }
 
-        using IEnumerator<int> itemIterator = GetOccupiedSlots().GetEnumerator();
-        itemIterator.MoveNext();
+        for( int i = 0; i < MaxSize; i++ )
+        {
+            if( _items.ContainsKey( i ) )
+            {
+                return _items[i];
+            }
+        }
 
-        return _items[itemIterator.Current];
+        return null;
 
     }
 
@@ -213,25 +218,14 @@ public class Inventory<T> where T : class
     /// <summary>
     /// Returns an IEnumerable list of all currently occupied slots.
     /// </summary>
-    public IEnumerable<int> GetOccupiedSlots()
-    {
-        return _items.Keys;
-    }
-
-    /// <summary>
-    /// Returns an IEnumerable list of all currently unoccupied slots.
-    /// </summary>
-    public IEnumerable<int> GetUnoccupiedSlots()
+    public IEnumerable<T> GetItems()
     {
         for( int i = 0; i < MaxSize; i++ )
         {
-            if( IsSlotIndexOccupied( i ) )
+            if( _items.ContainsKey( i ) )
             {
-                continue;
+                yield return _items[i];
             }
-
-            yield return i;
-
         }
     }
 }

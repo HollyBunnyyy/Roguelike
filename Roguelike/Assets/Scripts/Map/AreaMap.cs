@@ -44,4 +44,11 @@ public class AreaMap : MonoBehaviour
             }
         }
     }
+
+    protected void Start()
+    {
+
+
+    }
+
 }

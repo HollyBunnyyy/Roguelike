@@ -42,6 +42,12 @@ public class Character : Entity
 
     public void Kill()
     {
+        foreach( Item item in Inventory.GetItems() )
+        {
+            CurrentTile.OccupyingItems.TryAddNext( item );
+
+        }
+
         Destroy( gameObject );
 
     }

@@ -1,0 +1,15 @@
+{
+  "CharacterTable": [
+    {
+		"ID": "0",
+		"Name": "Hippo",
+		"Sprite": "Hippo.png",
+		"Description": "Goober",
+		"Heart": "6",
+		"Ego": "7",
+		"Dream": "2",
+		"Flow": "0",
+		"Pain": "2"
+    }
+  ]
+}

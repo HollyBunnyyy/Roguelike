@@ -13,7 +13,15 @@ public class Player : Character, ITurnAgent
 
         }
 
+        Inventory.TryAddNext( new Item( 120001 ) );
+        Inventory.TryAddNext( new Item( 120002 ) );
+        Inventory.TryAddNext( new Item( 120003 ) );
+
         Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
+
+        Roguelike.Instance.AssetManager.TryGetMetaData( 0, out CharacterMetaData characterData );
+
+        _spriteRenderer.sprite = characterData.Sprite;
 
     }
 
@@ -24,12 +32,6 @@ public class Player : Character, ITurnAgent
             if( Roguelike.Instance.InputHandler.WASDAxis != Vector2.zero )
             {
                 TryMoveTowardsDirection( Vector2Int.RoundToInt( Roguelike.Instance.InputHandler.WASDAxis ), out Entity entityHit );
-
-                if( CurrentTile.OccupyingItems.OccupiedCount > 0 )
-                {
-                    Debug.Log( CurrentTile.OccupyingItems.GetEarliestItem() );
-
-                }
 
                 if( entityHit is Character )
                 {

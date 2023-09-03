@@ -50,6 +50,7 @@ public static class AssetParser
 
         textureData = new Texture2D( 24, 24 );
         textureData.filterMode = FilterMode.Point;
+        textureData.wrapMode = TextureWrapMode.Clamp;
         textureData.LoadImage( rawImageData );
         
         return true;
@@ -70,6 +71,4 @@ public static class AssetParser
         return true;
 
     }
-
-
 }

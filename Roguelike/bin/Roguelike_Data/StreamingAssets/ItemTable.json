@@ -1,0 +1,32 @@
+{
+  "ItemTable": [
+    {
+      "ID": "0",
+      "Name": "Test Item",
+      "Sprite": "Sword.png",
+      "Description": "Test Description",
+      "Rarity": 0
+    },
+	{
+      "ID": "120001",
+      "Name": "Debug_Item_A",
+      "Sprite": "Debug_Items_0.png",
+      "Description": "Debug Item A",
+      "Rarity": 0
+    },
+	{
+      "ID": "120002",
+      "Name": "Debug_Item_B",
+      "Sprite": "Debug_Items_1.png",
+      "Description": "Debug Item B",
+      "Rarity": 0
+    },
+	{
+      "ID": "120003",
+      "Name": "Debug_Item_C",
+      "Sprite": "Debug_Items_2.png",
+      "Description": "Debug Item C",
+      "Rarity": 0
+    }	
+  ]
+}

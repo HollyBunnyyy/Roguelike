@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private TurnHandler _turnHandler;
     public TurnHandler TurnHandler => _turnHandler;
 
-    protected virtual void Awake()
+    public void Awake()
     {
         _turnHandler = GetComponent<TurnHandler>();
 

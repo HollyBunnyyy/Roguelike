@@ -29,9 +29,7 @@ public class TurnHandler : MonoBehaviour
         if( CurrentAgent.TurnAction() )
         {
             GetNextAgent();
-
         }
-
     }
 
     public ITurnAgent GetNextAgent()
@@ -39,7 +37,6 @@ public class TurnHandler : MonoBehaviour
         if( Count <= 0 )
         {
             return null;
-
         }
 
         LinkedListNode<ITurnAgent> currentAgent = TurnAgents.First;
