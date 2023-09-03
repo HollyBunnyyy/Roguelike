@@ -12,21 +12,27 @@ public class ItemLookupTable : ILookupTable<ItemMetaData>
     // This just sorts the dictionary by ID's.
     private SortedDictionary<int, ItemMetaData> _itemLookupTable = new SortedDictionary<int, ItemMetaData>();
 
-    public ItemLookupTable( TextAsset itemTableJSON )
+    public ItemLookupTable( string RawJSONText )
     {
-        _jsonItemArray = JsonUtility.FromJson<JSONItemLookupArray>( itemTableJSON.text );
+        _jsonItemArray = JsonUtility.FromJson<JSONItemLookupArray>( RawJSONText );
 
         for( int i = 0; i < _jsonItemArray.ItemTable.Length; i++ )
         {
             JSONItemMetaData jsonItemToAdd = _jsonItemArray.ItemTable[i];
 
-            Roguelike.Instance.AssetManager.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
+            if( !AssetParser.TryGetSpriteFromPath( "/Textures/Items/" + jsonItemToAdd.Sprite, out Sprite spriteData ) )
+            {
+                Debug.LogWarning( "Sprite data from JSON item meta data could not be found." );
+
+            }
+
+            spriteData.name = jsonItemToAdd.Sprite;
 
             _itemLookupTable.Add( jsonItemToAdd.ID, new ItemMetaData() 
             { 
                 ID          = jsonItemToAdd.ID,
                 Name        = jsonItemToAdd.Name,
-                Sprite      = sprite,
+                Sprite      = spriteData,
                 Description = jsonItemToAdd.Description,
                 Rarity      = jsonItemToAdd.Rarity
                          

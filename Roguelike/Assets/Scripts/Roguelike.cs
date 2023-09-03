@@ -18,7 +18,7 @@ public class Roguelike : MonoBehaviour
     private InputHandler _inputHandler;
     public InputHandler InputHandler => _inputHandler;
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         _gameManager  = GetComponent<GameManager>();
         _assetManager = GetComponent<AssetManager>();
@@ -34,20 +34,14 @@ public class Roguelike : MonoBehaviour
 
         }
 
-        Roguelike roguelikeInstance = GameObject.FindObjectOfType<Roguelike>();
+        Roguelike roguelikeInstance = GameObject.FindObjectsOfType<Roguelike>()[0];
 
-        if( !roguelikeInstance )
+        if( roguelikeInstance == null )
         {
-            GameObject singletonGameObject = new GameObject() 
-            { 
-                name = "Roguelike" 
-            };
-
-            roguelikeInstance = singletonGameObject.AddComponent<Roguelike>();
-
+            roguelikeInstance = new GameObject( "Roguelike" ).AddComponent<Roguelike>();
         }
 
-        return roguelikeInstance;
+        return _instance = roguelikeInstance;
 
     }
 }

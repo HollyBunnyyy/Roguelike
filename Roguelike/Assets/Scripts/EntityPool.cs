@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityPawnPool : MonoBehaviour, IObjectPool<EntityPawn>
+public class EntityPool : MonoBehaviour, IObjectPool<Entity>
 {
     [SerializeField]
     private int _amountToPrewarm;
 
-    [SerializeField]
-    private EntityPawn _pawnPrefab;
-
-    private Queue<EntityPawn> _entityPool = new Queue<EntityPawn>();
+    private Queue<Entity> _entityPool = new Queue<Entity>();
 
     protected void Awake()
     {
@@ -22,7 +19,7 @@ public class EntityPawnPool : MonoBehaviour, IObjectPool<EntityPawn>
         }
     }
 
-    public EntityPawn GetNext()
+    public Entity GetNext()
     {
         if( _entityPool.Count <= 1 )
         {
@@ -30,14 +27,14 @@ public class EntityPawnPool : MonoBehaviour, IObjectPool<EntityPawn>
 
         }
 
-        EntityPawn entityPawnToRelease = _entityPool.Dequeue();
+        Entity entityPawnToRelease = _entityPool.Dequeue();
         entityPawnToRelease.Enable();
 
         return entityPawnToRelease;
 
     }
 
-    public void ReturnToPool( EntityPawn objectToPool )
+    public void ReturnToPool( Entity objectToPool )
     {
         _entityPool.Enqueue( objectToPool );
 
@@ -50,7 +47,8 @@ public class EntityPawnPool : MonoBehaviour, IObjectPool<EntityPawn>
 
     public void GenerateNewPawn()
     {
-        EntityPawn pawnToInstantiate = Instantiate( _pawnPrefab, transform );
+        Entity pawnToInstantiate = new GameObject( "BlankEntity" ).AddComponent<Entity>();
+        pawnToInstantiate.transform.SetParent( transform );
         pawnToInstantiate.TryBindToPool( this );
 
         ReturnToPool( pawnToInstantiate );

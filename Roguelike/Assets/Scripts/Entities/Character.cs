@@ -23,6 +23,11 @@ public class Character : Entity
 
     public Inventory<Item> Inventory = new Inventory<Item>( 16 );
 
+    public void OnDisable()
+    {
+        CurrentTile.OccupyingEntity = null;
+    }
+
     public void Heal( float amountToHeal )
     {
         Health += amountToHeal;

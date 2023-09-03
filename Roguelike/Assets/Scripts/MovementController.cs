@@ -2,25 +2,13 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
-
     [SerializeField]
     private AreaMap _areaMap;
 
     [SerializeField]
     private Entity _entityToMove;
 
-    protected void Start()
-    {
-        TryMoveToTile( CurrentTile, out Entity entityOccupying );
-
-    }
-
-    protected void OnDestroy()
-    {
-        CurrentTile.OccupyingEntity = null;
-
-    }
+    public AreaTile CurrentTile => _areaMap.GridMap.WorldToTile( transform.position );
 
     public bool TryMoveToTile( AreaTile tileToMoveTo, out Entity entityOccupying )
     {
@@ -59,5 +47,4 @@ public class MovementController : MonoBehaviour
         return TryMoveToTile( targetTile, out entityOccupying );
 
     }
-
 }

@@ -8,7 +8,7 @@ public class AreaMap : MonoBehaviour
 
     public GridMap<AreaTile> GridMap;
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         _tileMap.CompressBounds();
 
@@ -27,19 +27,20 @@ public class AreaMap : MonoBehaviour
                 Vector3 worldPosition = GridMap.TileToWorldPosition( x, y );
                 Vector2Int localPosition = new Vector2Int( x, y );
 
-                GridMap[x, y] = new AreaTile( worldPosition, localPosition );
+                AreaTile tileToAdd = new AreaTile( worldPosition, localPosition );
+             
+                GridMap[x, y] = tileToAdd;
 
                 if( x == 5 && y == 5 )
                 {
-                    GridMap[x, y].OccupyingItems.TryAdd( 0, new Item( 120003 ) );
+                    tileToAdd.OccupyingItems.TryAddNext( new Item( 120003 ) );
 
                 }
 
                 if( !_tileMap.GetTile( new Vector3Int( x, y ) + _tileMap.origin  ))
                 {
-                    GridMap[x, y].IsWalkable = false;
+                    tileToAdd.IsWalkable = false;
                 }
-
             }
         }
     }

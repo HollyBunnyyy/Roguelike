@@ -18,10 +18,11 @@ public class InputHandler : MonoBehaviour
 
     [SerializeField]
     private InputSettings _inputSettings;
+    public InputSettings InputSettings => ( _inputSettings == null ) ? new InputSettings() : _inputSettings;
 
     [SerializeField]
     private Camera _mainCamera;
-    public Camera MainCamera => _mainCamera;
+    public Camera MainCamera => ( _mainCamera == null ) ? _mainCamera = Camera.main : _mainCamera;
 
     private void Awake()
     {

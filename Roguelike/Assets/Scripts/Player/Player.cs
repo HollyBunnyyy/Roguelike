@@ -5,15 +5,13 @@ public class Player : Character, ITurnAgent
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
-    protected void Awake()
+    protected void Start()
     {
-        Inventory.IncreaseTotalSize( 4 );
+        if( !TryMoveToTile( CurrentTile, out Entity entityOccupying ) )
+        {
+            Debug.LogError( "Attempt to set entities current tile failed." );
 
-        Inventory.TryAdd( 0, new Item( 120001 ) );
-        Inventory.TryAdd( 1, new Item( 120002 ) );
-        Inventory.TryAdd( 6, new Item( 120003 ) );
-        Inventory.TryAdd( 12, new Item( 120003 ) );
-        Inventory.TryAdd( 13, new Item( 120002 ) );
+        }
 
         Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
 
@@ -27,9 +25,9 @@ public class Player : Character, ITurnAgent
             {
                 TryMoveTowardsDirection( Vector2Int.RoundToInt( Roguelike.Instance.InputHandler.WASDAxis ), out Entity entityHit );
 
-                if( CurrentTile.OccupyingItems.OccupiedCount != 0 )
+                if( CurrentTile.OccupyingItems.OccupiedCount > 0 )
                 {
-                    Debug.Log( CurrentTile.OccupyingItems[0].ID );
+                    Debug.Log( CurrentTile.OccupyingItems.GetEarliestItem() );
 
                 }
 
@@ -51,7 +49,7 @@ public class Player : Character, ITurnAgent
                 {
                     CurrentTile.OccupyingItems.TryRemove( 0, out Item itemRemoved );
 
-                    Inventory.TryAdd( 2, itemRemoved );
+                    Inventory.TryAddNext( itemRemoved );
 
                 }
 

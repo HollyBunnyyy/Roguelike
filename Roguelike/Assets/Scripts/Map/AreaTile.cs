@@ -7,44 +7,54 @@ public class AreaTile
 {
     public bool IsWalkable = true;
 
-    public Entity OccupyingEntity = null;
-
-    private EntityPawn _entityPawn;
+    public Entity OccupyingEntity;
 
     public Inventory<Item> OccupyingItems = new Inventory<Item>( 2 );
 
     public readonly Vector3     WorldPosition;
     public readonly Vector2Int  LocalPosition;
 
+    private Entity _entityInventoryGraphic;
+
     public AreaTile( Vector3 worldPosition, Vector2Int localPosition )
     {
         this.WorldPosition = worldPosition;
         this.LocalPosition = localPosition;
 
-        OccupyingItems.OnCollectionDirty += FillTile;
+        OccupyingItems.OnCollectionDirty += Test;
 
     }
 
-    // I'm sure this can be handled better, for now it's debug.
-    private void FillTile()
+    ~AreaTile()
+    {
+        OccupyingItems.OnCollectionDirty -= Test;
+
+    }
+
+    private void Test()
     {
         if( OccupyingItems.HasItems )
         {
-            if( !_entityPawn )
+            if( !_entityInventoryGraphic )
             {
-                _entityPawn = Roguelike.Instance.AssetManager.GetBlankPawn( WorldPosition );
-
-                Roguelike.Instance.AssetManager.TryGetSpriteFromPath( "Debug_Items_2.png", out Sprite sprite );
-
-                _entityPawn.SetEntityToDisplay( sprite );
+                // Combine these two functions below into one method, debug for now.
+                _entityInventoryGraphic = Roguelike.Instance.AssetManager.SpawnEntity( WorldPosition );
 
             }
+            //_entityInventoryGraphic.SpriteRenderer.sprite = OccupyingItems.GetEarliestItem().ID;
 
-            return;
+            if( OccupyingItems.GetEarliestItem().ID != _entityInventoryGraphic.ID )
+            {
+                _entityInventoryGraphic.ID = OccupyingItems.GetEarliestItem().ID;
+
+                Roguelike.Instance.AssetManager.TryGetMetaData( _entityInventoryGraphic.ID, out ItemMetaData itemData );
+
+                _entityInventoryGraphic.SpriteRenderer.sprite = itemData.Sprite;
+
+            }
+        } else {
+            _entityInventoryGraphic?.Disable();
 
         }
-
-        _entityPawn?.Disable();
-
     }
 }

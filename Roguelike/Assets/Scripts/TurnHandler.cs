@@ -9,8 +9,14 @@ public class TurnHandler : MonoBehaviour
 
     public int Count => TurnAgents.Count;
 
-    protected virtual void Update()
+    protected void Update()
     {
+        if( Count <= 0 )
+        {
+            return;
+
+        }
+
         // == operator doesn't work here for some reason.
         if( CurrentAgent.Equals( null ) )
         {

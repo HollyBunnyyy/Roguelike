@@ -69,6 +69,50 @@ public class Inventory<T> where T : class
 
     }
 
+
+    /// <summary>
+    /// Attempts to add the given item to the earliest available index that isn't occupied.
+    /// </summary>
+    public bool TryAddNext( T itemToAdd )
+    {
+        if( !CanAddItems )
+        {
+            return false;
+
+        }
+
+        for( int i = 0; i < MaxSize; i++ )
+        {
+            if( !_items.ContainsKey( i ) )
+            {
+                TryAdd( i, itemToAdd );
+
+                return true;
+
+            }
+        }
+
+        return false;
+
+    }
+
+    /// <summary>
+    /// Attempts to get the first available item in the collection.
+    /// </summary>
+    public T GetEarliestItem()
+    {
+        if( !HasItems )
+        {
+            return null; 
+        }
+
+        using IEnumerator<int> itemIterator = GetOccupiedSlots().GetEnumerator();
+        itemIterator.MoveNext();
+
+        return _items[itemIterator.Current];
+
+    }
+
     /// <summary>
     /// Attemps to remove an item belonging to the given slot index.
     /// </summary>

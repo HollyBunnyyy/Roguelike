@@ -20,7 +20,7 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     /// </summary>
     public bool TrySetImage( int itemID )
     {
-        if( !Roguelike.Instance.AssetManager.TryGetIDMetaData( itemID, out ItemMetaData itemMetaData ) )
+        if( !Roguelike.Instance.AssetManager.TryGetMetaData( itemID, out ItemMetaData itemMetaData ) )
         {
             return false;
 

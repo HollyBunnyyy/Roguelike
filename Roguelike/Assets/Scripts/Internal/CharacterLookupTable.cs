@@ -7,21 +7,27 @@ public class CharacterLookupTable : ILookupTable<CharacterMetaData>
 
     private SortedDictionary<int, CharacterMetaData> _characterLookupTable = new SortedDictionary<int, CharacterMetaData>();
 
-    public CharacterLookupTable( TextAsset characterTableJSON )
+    public CharacterLookupTable( string RawJSONText )
     {
-        _jsonCharacterTable = JsonUtility.FromJson<JSONCharacterLookupArray>( characterTableJSON.text );
+        _jsonCharacterTable = JsonUtility.FromJson<JSONCharacterLookupArray>( RawJSONText );
 
         for( int i = 0; i < _jsonCharacterTable.CharacterTable.Length; i++ )
         {
             JSONCharacterMetaData jsonItemToAdd = _jsonCharacterTable.CharacterTable[i];
 
-            Roguelike.Instance.AssetManager.TryGetSpriteFromPath( jsonItemToAdd.Sprite, out Sprite sprite );
+            if( !AssetParser.TryGetSpriteFromPath( "/Textures/Characters/" + jsonItemToAdd.Sprite, out Sprite spriteData ) )
+            {
+                Debug.LogWarning( "Sprite data from JSON character meta data not found." );
+
+            }
+
+            spriteData.name = jsonItemToAdd.Sprite;
 
             _characterLookupTable.Add( jsonItemToAdd.ID, new CharacterMetaData() 
             {
                 ID          = jsonItemToAdd.ID,
                 Name        = jsonItemToAdd.Name,
-                Sprite      = sprite,
+                Sprite      = spriteData,
                 Description = jsonItemToAdd.Description,
                 Heart       = jsonItemToAdd.Heart,
                 Ego         = jsonItemToAdd.Ego,

@@ -10,8 +10,15 @@ public class DebugCharacter : Character, ITurnAgent
 
     private Direction2D _currentDirection = Direction2D.Right;
 
-    protected void Awake()
+    protected void Start()
     {
+        if( !TryMoveToTile( CurrentTile, out Entity entityOccupying ) )
+        {
+            Debug.LogError( "Attempt to set entities current tile failed." );
+
+        }
+
+
         Inventory = new Inventory<Item>( _maxInventorySize );
 
         Inventory.TryAdd( 1, new Item( 120001 ) );
