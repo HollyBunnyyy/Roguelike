@@ -18,7 +18,7 @@ public class CursorController : CursorListener
 
     private Entity _previousCharacter;
 
-    protected void Update()
+    protected void LateUpdate()
     {
         if( CurrentSelectedEntity is Character )
         {

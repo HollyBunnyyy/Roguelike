@@ -108,14 +108,14 @@ public class GridMap<T>
     /// <summary>
     /// Finds all tiles that are within the given radius around the xIndex and yIndex.
     /// </summary>
-    public IEnumerable<T> GetSurroundingTiles( int xIndex, int yIndex, int radius, RadiusShape radiusShape )
+    public IEnumerable<T> GetSurroundingTiles( int xIndex, int yIndex, int radius, RadiusShape radiusShape, bool omitStartIndex = true )
     {
         for( int x = -radius; x <= radius; x++ )
         {
             for( int y = -radius; y <= radius; y++ )
             {
                 // Cull the starting index from the search function.
-                if( x == 0 && y == 0 )
+                if( x == 0 && y == 0 && omitStartIndex )
                 {
                     continue;
                 }

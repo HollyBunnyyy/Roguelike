@@ -35,7 +35,7 @@ public class Player : Character, ITurnAgent
 
                 if( entityHit is Character )
                 {
-                    ( entityHit as Character ).Damage( 5.0f );
+                    ( entityHit as Character ).Health.Damage( 5.0f );
 
                 }
 

@@ -33,7 +33,7 @@ public class AreaMap : MonoBehaviour
 
                 if( x == 5 && y == 5 )
                 {
-                    tileToAdd.OccupyingItems.TryAddNext( new Item( 120003 ) );
+                    tileToAdd.IsWalkable = false;
 
                 }
 

@@ -481,7 +481,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 
@@ -787,7 +787,6 @@ MonoBehaviour:
   _entityToMove: {fileID: 827492525}
   ID: 0
   SpriteRenderer: {fileID: 0}
-  _health: 20
   _maxInventorySize: 12
   _shouldMove: 1
 --- !u!212 &827492526
@@ -2532,10 +2531,10 @@ Tilemap:
   - first: {x: -11, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
+      m_TileIndex: 0
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
+      m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
@@ -4401,9 +4400,9 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 336
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: f7a24402aea8c5e459fe68ed513e9ce8, type: 2}
+  - m_RefCount: 335
     m_Data: {fileID: 11400000, guid: 24dc18ac8e2c31d4789a2af39e11966c, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -4430,8 +4429,10 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 336
+  - m_RefCount: 335
     m_Data: {r: 1, g: 1, b: 1, a: 1}
+  - m_RefCount: 1
+    m_Data: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 0.09153615, g: 0.1072575, b: 0.16037738, a: 1}
@@ -5761,7 +5762,6 @@ MonoBehaviour:
   _entityToMove: {fileID: 2128681175}
   ID: 0
   SpriteRenderer: {fileID: 0}
-  _health: 20
   _spriteRenderer: {fileID: 2128681176}
 --- !u!212 &2128681176
 SpriteRenderer:

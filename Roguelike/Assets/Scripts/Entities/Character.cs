@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class Character : Entity
 {
-    [SerializeField]
-    private float _health = 20.0f;
-    public float Health 
+    private Health _health = new Health( 20.0f );
+    public Health Health 
     { 
-        get { return _health; }
-        private set 
-        {
-            _health = value;
-
-            if( _health <= 0.0f )
-            {
+        get 
+        {        
+            if( _health.Amount <= 0.0f )
                 Kill();
 
-            }     
-        }
+            return _health;    
+        } 
     }
 
     public Inventory<Item> Inventory = new Inventory<Item>( 16 );
@@ -28,28 +23,14 @@ public class Character : Entity
         CurrentTile.OccupyingEntity = null;
     }
 
-    public void Heal( float amountToHeal )
-    {
-        Health += amountToHeal;
-
-    }
-
-    public void Damage( float amountToDamage )
-    {
-        Health -= amountToDamage;
-
-    }
-
     public void Kill()
     {
         foreach( Item item in Inventory.GetItems() )
         {
             CurrentTile.OccupyingItems.TryAddNext( item );
-
         }
 
         Destroy( gameObject );
 
     }
-
 }
