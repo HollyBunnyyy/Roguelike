@@ -5,7 +5,7 @@ public class AssetManager : MonoBehaviour
     private ItemLookupTable _itemTable;
     private CharacterLookupTable _characterTable;
 
-    public void Awake()
+    protected void Awake()
     {
         _itemTable      ??= new ItemLookupTable( AssetParser.ReadTextFileContents( "/ItemTable.json" ) );
         _characterTable ??= new CharacterLookupTable( AssetParser.ReadTextFileContents( "/CharacterTable.json" ) );

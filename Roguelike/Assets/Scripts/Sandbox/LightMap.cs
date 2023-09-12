@@ -14,6 +14,14 @@ public class LightMap : MonoBehaviour
     [SerializeField]
     private LightNode _lightNodePrefab;
 
+    [Range( 0.0f, 1.0f )]
+    [SerializeField]
+    private float _debugStartSlope = 1.0f;
+
+    [Range( 0.0f, 1.0f )]
+    [SerializeField]
+    private float _debugEndSlope = 0.0f;
+
     protected void Awake()
     {
         _tileMap.CompressBounds();
@@ -33,6 +41,7 @@ public class LightMap : MonoBehaviour
                 LightNode node = Instantiate( _lightNodePrefab, transform );
                 node.WorldPosition = _lightMap.TileToWorldPosition( x, y );
                 node.LocalPosition = new Vector2Int( x, y );
+                node.Hide();
 
                 node.transform.position = node.WorldPosition;
 
@@ -50,23 +59,121 @@ public class LightMap : MonoBehaviour
 
     protected void Start()
     {
-        //Test( 24, 0, 16, Octant2D.OctantRegions[2] );
 
-        foreach( LightNode node in GetTilesInColumn( 9, 24, 0, 0.8f, 0.4f, Octant2D.OctantRegions[2] ))
+
+        Test( 0, 12, 9 );
+
+        //foreach( LightNode node in GetTilesInRow( 9, 24, 0, 0.8f, 0.4f, Octant2D.OctantRegions[2] ))
+        //{
+        //    node.SpriteRenderer.color = Color.green;
+        //}
+    }
+
+    public void Test( int xIndex, int yIndex, int rowsToScan )
+    {
+        GetTilesInRow( rowsToScan, xIndex, yIndex, 1.0f, 0.0f, Octant2D.OctantRegions[7] );
+    }
+
+    public void GetTilesInRow( int rowToCount, int originXIndex, int originYIndex, float startSlope, float endSlope, Octant2D octantRegion )
+    {
+        int indexToScanFrom = Mathf.RoundToInt( rowToCount * startSlope );
+        int indexToScanTo   = Mathf.FloorToInt( rowToCount * endSlope );
+
+        Debug.DrawRay( _lightMap[originXIndex, originYIndex].WorldPosition, new Vector3( rowToCount * startSlope, -rowToCount, 0.0f ), Color.green, 400.0f );
+        Debug.DrawRay( _lightMap[originXIndex, originYIndex].WorldPosition, new Vector3( rowToCount, rowToCount * endSlope, 0.0f ), Color.red, 400.0f );
+
+        for( int i = indexToScanFrom; i >= indexToScanTo; i-- )
         {
-            node.SpriteRenderer.color = Color.green;
+            int xNeighborIndex = originXIndex + rowToCount * octantRegion.XX + i * octantRegion.XY;
+            int yNeighborIndex = originYIndex + rowToCount * octantRegion.YX + i * octantRegion.YY;
+
+            if( !_lightMap.IsIndexInMap( xNeighborIndex, yNeighborIndex ) )
+            {
+                continue;
+            }
+
+            _lightMap[xNeighborIndex, yNeighborIndex].Show();
 
         }
 
     }
 
-    public void Test( int xIndex, int yIndex, int rowToScan, Octant2D octantRegion )
+    protected void OnDrawGizmos()
+    {
+        if( Application.isPlaying )
+        {
+            //Debug.DrawRay( _lightMap[24, 0].WorldPosition, new Vector3( ( 9.0f * _debugStartSlope ), 9.0f - _lightMap.CellCenter.y, 0.0f ), Color.cyan );
+            //Debug.DrawRay( _lightMap[24, 0].WorldPosition, new Vector3( ( 9.0f * _debugEndSlope ) + _lightMap.CellCenter.x, 9.0f - _lightMap.CellCenter.y, 0.0f ), Color.cyan );
+
+            //Debug.Log( Mathf.RoundToInt( 9.0f * _debugStartSlope ) + ", " + Mathf.FloorToInt( 9.0f * _debugEndSlope ));
+
+        }
+    }
+
+}
+
+/*
+ * 
+ * 
+        for( int i = indexToScanFrom; i >= indexToScanTo; i-- )
+        {
+            int xNeighborIndex = originXIndex + rowToCount * octantRegion.XX + i * octantRegion.XY;
+            int yNeighborIndex = originYIndex + rowToCount * octantRegion.YX + i * octantRegion.YY;
+
+            if( !_lightMap.IsIndexInMap( xNeighborIndex, yNeighborIndex ) )
+            {
+                continue;
+            }
+
+            LightNode currentNode = _lightMap[xNeighborIndex, yNeighborIndex];
+            currentNode.Show();
+
+            if( previousNode != null )
+            {
+                if( previousNode.IsWall && !currentNode.IsWall )
+                {
+                    nextStartSlope = 1.0f / ( ( rowToCount + _lightMap.CellCenter.x ) / ( i + _lightMap.CellCenter.y ) );
+
+                    Debug.DrawRay( _lightMap[originXIndex, originYIndex].WorldPosition, new Vector3( 16.0f * nextStartSlope, 16.0f, 0.0f ), Color.green, 400.0f );
+
+                }
+
+                if( !previousNode.IsWall && currentNode.IsWall )
+                {
+                    nextEndSlope = 1.0f / ( ( rowToCount - _lightMap.CellCenter.x ) / ( i + _lightMap.CellCenter.y ) );
+
+                    Debug.DrawRay( _lightMap[originXIndex, originYIndex].WorldPosition, new Vector3( 16.0f * nextEndSlope, 16.0f, 0.0f ), Color.red, 400.0f );
+
+                    GetTilesInRow( rowToCount + 1, originXIndex, originYIndex, nextStartSlope, nextEndSlope, octantRegion );
+
+                }
+            }
+
+            previousNode = currentNode;
+
+        }
+
+        if( rowToCount > 16 )
+        {
+            return;
+        }
+
+        GetTilesInRow( rowToCount + 1, originXIndex, originYIndex, nextStartSlope, nextEndSlope, octantRegion );
+
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ public void Test( int xIndex, int yIndex, int rowToScan, Octant2D octantRegion )
     {
         LightNode previousTile = null;
 
 
 
-        for( int x = 0; x <= rowToScan; x++ )
+        for( int i = 0; i <= rowToScan; x++ )
         {
             for( int y = x; y >= 0; y-- )
             {
@@ -110,21 +217,19 @@ public class LightMap : MonoBehaviour
 
     }
 
-    public IEnumerable<LightNode> GetTilesInRow( int rowToCount, int startXIndex, int startYIndex, float startSlope, float endSlope, Octant2D octantRegion )
+
+    public IEnumerable<LightNode> GetTilesInRow( int rowToCount, int originXIndex, int originYIndex, float startSlope, float endSlope, Octant2D octantRegion )
     {
-        Debug.DrawRay( _lightMap[startXIndex, startYIndex].WorldPosition, new Vector3( -rowToCount * startSlope, rowToCount, 0.0f ), Color.green, 400.0f );
-        Debug.DrawRay( _lightMap[startXIndex, startYIndex].WorldPosition, new Vector3( -rowToCount * endSlope, rowToCount, 0.0f ), Color.red, 400.0f );
+        //Debug.DrawRay( _lightMap[startXIndex, startYIndex].WorldPosition, new Vector3( -rowToCount * startSlope, rowToCount, 0.0f ), Color.green, 400.0f );
+        //Debug.DrawRay( _lightMap[startXIndex, startYIndex].WorldPosition, new Vector3( -rowToCount * endSlope, rowToCount, 0.0f ), Color.red, 400.0f );
 
-        for( int i = rowToCount; i >= 0; i-- )
+        int indexToScanFrom = Mathf.RoundToInt( rowToCount * startSlope );
+        int indexToScanTo   = Mathf.CeilToInt( rowToCount * endSlope );
+
+        for( int i = indexToScanFrom; i >= indexToScanTo; i-- )
         {
-            int xNeighborIndex = startXIndex + rowToCount * octantRegion.XX + i * octantRegion.XY;
-            int yNeighborIndex = startYIndex + rowToCount * octantRegion.YX + i * octantRegion.YY;
-
-            if( i - _lightMap.CellCenter.x >= ( rowToCount * startSlope ) )
-                continue;
-
-            if( i + _lightMap.CellCenter.x <= ( rowToCount * endSlope ) )
-                continue;
+            int xNeighborIndex = originXIndex + rowToCount * octantRegion.XX + i * octantRegion.XY;
+            int yNeighborIndex = originYIndex + rowToCount * octantRegion.YX + i * octantRegion.YY;
 
             if( _lightMap.IsIndexInMap( xNeighborIndex, yNeighborIndex ) )
             {
@@ -132,52 +237,5 @@ public class LightMap : MonoBehaviour
             }
         }
     }
-}
 
-/*
- * 
- * LightNode previousTile = null;
-
-        float startSlope = 1.0f;
- * 
-        for( int x = 0; x <= rowToScan; x++ )
-        {
-            for( int y = x; y >= 0; y-- )
-            {
-                int xNeighborIndex = xIndex + x * octantRegion.XX + y * octantRegion.XY;
-                int yNeighborIndex = yIndex + x * octantRegion.YX + y * octantRegion.YY;
-
-                float endSlope = ( x - _lightMap.CellCenter.x ) / ( y + _lightMap.CellCenter.y );
-
-                if( !_lightMap.IsIndexInMap( xNeighborIndex, yNeighborIndex ) )
-                {
-                    continue;
-                }
-
-                LightNode currentTile = _lightMap[xNeighborIndex, yNeighborIndex];
-                currentTile.Show();
-                currentTile.Text.text = ( x + ", " + y ).ToString();
-
-                if( previousTile != null )
-                {
-                    if( previousTile.IsWall && !currentTile.IsWall )
-                    {
-                        currentTile.SpriteRenderer.color = Color.green;
-
-                        // slope should start
-                    }
-
-                    if( !previousTile.IsWall && currentTile.IsWall )
-                    {
-                        Debug.Log( endSlope + "," + x + ", " + y );
-
-                        currentTile.SpriteRenderer.color = Color.red;
-
-                        // slope should end
-                    }
-                }
-
-                previousTile = currentTile;
-
-            }
  */

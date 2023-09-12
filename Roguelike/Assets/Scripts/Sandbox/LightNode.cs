@@ -15,11 +15,11 @@ public class LightNode : MonoBehaviour
 
     public void Show()
     {
-        SpriteRenderer.color = Color.white;
+        SpriteRenderer.color = IsWall ? Color.grey : Color.white;
     }
 
     public void Hide()
     {
-        SpriteRenderer.color = Color.grey;
+        SpriteRenderer.color = Color.black;
     }
 }
