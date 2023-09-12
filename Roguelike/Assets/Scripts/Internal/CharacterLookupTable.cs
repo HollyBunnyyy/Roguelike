@@ -16,8 +16,10 @@ public class CharacterLookupTable : ILookupTable<CharacterMetaData>
             JSONCharacterMetaData jsonItemToAdd = _jsonCharacterTable.CharacterTable[i];
 
             if( !AssetParser.TryGetSpriteFromPath( "/Textures/Characters/" + jsonItemToAdd.Sprite, out Sprite spriteData ) )
-            {
+            {               
                 Debug.LogWarning( "Sprite data from JSON character meta data not found." );
+
+                spriteData = Resources.Load<Sprite>( "null" );
 
             }
 

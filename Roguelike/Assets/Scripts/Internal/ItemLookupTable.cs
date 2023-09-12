@@ -24,6 +24,8 @@ public class ItemLookupTable : ILookupTable<ItemMetaData>
             {
                 Debug.LogWarning( "Sprite data from JSON item meta data could not be found." );
 
+                spriteData = Resources.Load<Sprite>( "null" );
+
             }
 
             spriteData.name = jsonItemToAdd.Sprite;
