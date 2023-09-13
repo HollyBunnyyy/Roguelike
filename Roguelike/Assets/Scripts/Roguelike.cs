@@ -32,14 +32,6 @@ public class Roguelike : MonoBehaviour
         get { return _inputHandler != null ? _inputHandler : _inputHandler = GetComponent<InputHandler>(); }
     }
 
-    protected void Awake()
-    {
-        _gameManager  = GetComponent<GameManager>();
-        _assetManager = GetComponent<AssetManager>();
-        _inputHandler = GetComponent<InputHandler>();
-
-    }
-
     public static Roguelike FindRoguelikeUniqueInstance()
     {
         if( _instance != null )
