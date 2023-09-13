@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class Player : Character, ITurnAgent
 {
-    [SerializeField]
-    private SpriteRenderer _spriteRenderer;
-
     protected void Start()
     {
         if( !TryMoveToTile( CurrentTile, out Entity entityOccupying ) )
@@ -19,10 +16,15 @@ public class Player : Character, ITurnAgent
 
         Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
 
-        Roguelike.Instance.AssetManager.TryGetMetaData( 0, out CharacterMetaData characterData );
+    }
 
-        _spriteRenderer.sprite = characterData.Sprite;
+    protected void Update()
+    {
+        if( Input.GetKeyDown( KeyCode.Space ) )
+        {
+            Debug.Log( DiceRoller.Roll( 6 ) );
 
+        }
     }
 
     public bool TurnAction()

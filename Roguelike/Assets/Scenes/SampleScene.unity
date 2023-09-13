@@ -247,7 +247,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 1
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -436,9 +436,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.05544148
+    y: 0.07961165
     width: 1
-    height: 0.8870637
+    height: 0.83883494
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -785,8 +785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _areaMap: {fileID: 967166126}
   _entityToMove: {fileID: 827492525}
-  ID: 0
-  SpriteRenderer: {fileID: 0}
+  id: 0
   _maxInventorySize: 12
   _shouldMove: 1
 --- !u!212 &827492526
@@ -5373,7 +5372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1671281351}
-  _assetManager: {fileID: 1671281350}
+  _assetManager: {fileID: 0}
   _inputHandler: {fileID: 1671281349}
 --- !u!4 &1671281347
 Transform:
@@ -5760,9 +5759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _areaMap: {fileID: 967166126}
   _entityToMove: {fileID: 2128681175}
-  ID: 0
-  SpriteRenderer: {fileID: 0}
-  _spriteRenderer: {fileID: 2128681176}
+  id: 0
 --- !u!212 &2128681176
 SpriteRenderer:
   m_ObjectHideFlags: 0

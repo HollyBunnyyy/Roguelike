@@ -2,14 +2,19 @@ using UnityEngine;
 
 public class AssetManager : MonoBehaviour
 {
-    private ItemLookupTable _itemTable;
-    private CharacterLookupTable _characterTable;
+    // More lazy-instantiation as seen in the Roguelike singleton - this is especially important for
+    // The asset manager as this is where the game sources ALL data from.
 
-    protected void Awake()
+    private ItemLookupTable _itemTable { get; init; }
+    public ItemLookupTable ItemLookupTable
     {
-        _itemTable      ??= new ItemLookupTable( AssetParser.ReadTextFileContents( "/ItemTable.json" ) );
-        _characterTable ??= new CharacterLookupTable( AssetParser.ReadTextFileContents( "/CharacterTable.json" ) );
+        get { return _itemTable ?? new ItemLookupTable( AssetParser.ReadTextFileContents( "/ItemTable.json" ) ); }
+    }
 
+    private CharacterLookupTable _characterTable { get; init; }
+    public CharacterLookupTable CharacterLookupTable
+    {
+        get { return _characterTable ?? new CharacterLookupTable( AssetParser.ReadTextFileContents( "/CharacterTable.json" ) ); }
     }
 
     /// <summary>
@@ -17,7 +22,7 @@ public class AssetManager : MonoBehaviour
     /// </summary>
     public bool TryGetMetaData( int entityID, out CharacterMetaData characterData )
     {
-        return _characterTable.TryGetID( entityID, out characterData );
+        return CharacterLookupTable.TryGetID( entityID, out characterData );
     }
 
     /// <summary>
@@ -25,6 +30,6 @@ public class AssetManager : MonoBehaviour
     /// </summary>
     public bool TryGetMetaData( int entityID, out ItemMetaData itemData )
     {
-        return _itemTable.TryGetID( entityID, out itemData );
+        return ItemLookupTable.TryGetID( entityID, out itemData );
     }
 }

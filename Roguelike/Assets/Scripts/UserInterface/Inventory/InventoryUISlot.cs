@@ -14,7 +14,6 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private int _currentItemID;
     public int CurrentItemID => _currentItemID;
 
-
     /// <summary>
     /// Attempts to set the slot's image to the given item ID.
     /// </summary>
@@ -56,8 +55,6 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag( PointerEventData eventData )
     {
-        Debug.Log( eventData.pointerEnter.name );
-
         _graphic.transform.SetParent( _slot );
         _graphic.transform.position = _slot.transform.position;
 

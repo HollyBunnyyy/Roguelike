@@ -21,7 +21,7 @@ public class DebugCharacter : Character, ITurnAgent
 
         Inventory = new Inventory<Item>( _maxInventorySize );
 
-        Inventory.TryAdd( 1, new Item( 120001 ) );
+        Inventory.TryAddNext( new Item( 120001 ) );
 
         Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
 
@@ -32,7 +32,6 @@ public class DebugCharacter : Character, ITurnAgent
         if( _shouldMove )
         {
             TryMoveTowardsDirection( _currentDirection = Direction2D.Opposite( _currentDirection ), out Entity entityHit );
-
         }
 
         return true;

@@ -2,9 +2,20 @@
   "CharacterTable": [
     {
 		"ID": "0",
+		"Name": "Entity",
+		"Sprite": "Default.png",
+		"Description": "Default unassigned entity.",
+		"Heart": "0",
+		"Ego": "0",
+		"Dream": "0",
+		"Flow": "0",
+		"Pain": "0"
+    },
+    {
+		"ID": "1",
 		"Name": "Hippo",
 		"Sprite": "Hippo.png",
-		"Description": "Goober",
+		"Description": "Goober.",
 		"Heart": "6",
 		"Ego": "7",
 		"Dream": "2",

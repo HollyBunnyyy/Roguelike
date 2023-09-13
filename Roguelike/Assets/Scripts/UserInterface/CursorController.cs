@@ -33,14 +33,14 @@ public class CursorController : CursorListener
 
             }
 
-            _inventoryUIContainer.Enable();
+            //_inventoryUIContainer.Enable();
 
             return;
 
         }
 
         _cursorGraphicHandler.SetCursorSprite( _unselectedSprite );
-        _inventoryUIContainer.Disable();
+        //_inventoryUIContainer.Disable();
 
     }
 
