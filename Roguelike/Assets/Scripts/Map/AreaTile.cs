@@ -6,7 +6,7 @@ public class AreaTile
 
     public Entity OccupyingEntity;
 
-    public Inventory<Item> OccupyingItems = new Inventory<Item>( 2 );
+    public Inventory<ItemStack> OccupyingItems = new Inventory<ItemStack>( 2 );
 
     public readonly Vector3     WorldPosition;
     public readonly Vector2Int  LocalPosition;
@@ -17,7 +17,4 @@ public class AreaTile
         this.LocalPosition = localPosition;
 
     }
-
-
-
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class InventoryUIContainer : MonoBehaviour
 {
     [SerializeField]
-    private Inventory<Item> _inventoryToView;
+    private Inventory<ItemStack> _inventoryToView;
 
     [SerializeField]
     private InventoryUISlot _inventorySlotPrefab;
@@ -28,7 +28,7 @@ public class InventoryUIContainer : MonoBehaviour
         }  
     }
 
-    public void SetInventoryToView( Inventory<Item> inventoryToWatch )
+    public void SetInventoryToView( Inventory<ItemStack> inventoryToWatch )
     {
         // Remove our event hook from the previous inventory.
         if( _inventoryToView != null )
@@ -66,6 +66,7 @@ public class InventoryUIContainer : MonoBehaviour
             InventoryUISlot inventorySlot = _inventorySlots[i];
 
             inventorySlot.ResetImage();
+            inventorySlot._stackAmount.gameObject.SetActive( false );
 
             if( i >= _inventoryToView.MaxSize )
             {
@@ -79,7 +80,14 @@ public class InventoryUIContainer : MonoBehaviour
 
             if( _inventoryToView.IsSlotIndexOccupied( i ) )
             {
-                inventorySlot.TrySetImage( _inventoryToView[i].ID );
+                inventorySlot.TrySetImage( _inventoryToView[i].ItemID );
+
+                if( _inventoryToView[i].Amount > 1 )
+                {
+                    inventorySlot._stackAmount.gameObject.SetActive( true );
+                    inventorySlot._stackAmount.text = _inventoryToView[i].Amount.ToString();
+
+                }
 
             }
         }

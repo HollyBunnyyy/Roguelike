@@ -8,27 +8,18 @@ public class Entity : MovementController
     public int ID => id;
 
     private SpriteRenderer _spriteRenderer;
-
-    protected void Awake()
+    public SpriteRenderer SpriteRenderer 
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        SetEntityID( ID );
-
+        get { return _spriteRenderer != null ? _spriteRenderer : _spriteRenderer = GetComponent<SpriteRenderer>(); }
     }
 
     public void SetEntityID( int id )
     {
         this.id = id;
-
-        if( Roguelike.Instance.AssetManager.TryGetMetaData( id, out CharacterMetaData characterData ) )
-        {
-            SetEntitySprite( characterData.Sprite );
-        }
     }
 
     public void SetEntitySprite( Sprite sprite )
     {
-        _spriteRenderer.sprite = sprite;
+        SpriteRenderer.sprite = sprite;
     }
 }

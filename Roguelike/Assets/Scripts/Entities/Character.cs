@@ -16,7 +16,7 @@ public class Character : Entity
         } 
     }
 
-    public Inventory<Item> Inventory = new Inventory<Item>( 16 );
+    public Inventory<ItemStack> Inventory = new Inventory<ItemStack>( 16 );
 
     public void OnDisable()
     {
@@ -25,9 +25,9 @@ public class Character : Entity
 
     public void Kill()
     {
-        foreach( Item item in Inventory.GetItems() )
+        foreach( ItemStack itemStack in Inventory.GetItems() )
         {
-            CurrentTile.OccupyingItems.TryAddNext( item );
+            CurrentTile.OccupyingItems.TryAddNext( itemStack );
         }
 
         Destroy( gameObject );

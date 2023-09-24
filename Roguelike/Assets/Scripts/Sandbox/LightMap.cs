@@ -14,14 +14,6 @@ public class LightMap : MonoBehaviour
     [SerializeField]
     private LightNode _lightNodePrefab;
 
-    [Range( 0.0f, 1.0f )]
-    [SerializeField]
-    private float _debugStartSlope = 1.0f;
-
-    [Range( 0.0f, 1.0f )]
-    [SerializeField]
-    private float _debugEndSlope = 0.0f;
-
     protected void Awake()
     {
         _tileMap.CompressBounds();

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class CursorListener : MonoBehaviour
 {
-    public AreaTile CurrentSelectedTile => _gridMap.GridMap.WorldToTile( Roguelike.Instance.InputHandler.MousePositionWorld );
+    public AreaTile CurrentSelectedTile => CurrentMap.GridMap.WorldToTile( transform.position);
 
     public Entity CurrentSelectedEntity => CurrentSelectedTile?.OccupyingEntity;
 
-    [SerializeField]
-    private AreaMap _gridMap;
+    public AreaMap CurrentMap;
 
 }

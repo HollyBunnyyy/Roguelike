@@ -10,9 +10,8 @@ public class GameManager : MonoBehaviour
         get { return _turnHandler != null ? _turnHandler : _turnHandler = GetComponent<TurnHandler>(); } 
     }
 
-    public void Awake()
+    protected void Awake()
     {
         _turnHandler = GetComponent<TurnHandler>();
-
     }
 }

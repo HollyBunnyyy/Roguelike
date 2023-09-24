@@ -5,9 +5,6 @@ using UnityEngine;
 public class CursorController : CursorListener
 {
     [SerializeField]
-    private InventoryUIContainer _inventoryUIContainer;
-
-    [SerializeField]
     private CursorGraphicHandler _cursorGraphicHandler;
 
     [SerializeField]
@@ -16,11 +13,37 @@ public class CursorController : CursorListener
     [SerializeField]
     private Sprite _unselectedSprite;
 
-    private Entity _previousCharacter;
-
     protected void LateUpdate()
     {
         if( CurrentSelectedEntity is Character )
+        {
+            _cursorGraphicHandler.SetCursorSprite( _selectionSprite );
+
+            return;
+
+        }
+
+        _cursorGraphicHandler.SetCursorSprite( _unselectedSprite );
+
+    }
+
+    public void MoveTowardsDirection( Vector2Int directionToMoveTowards )
+    {
+        Vector2Int targetTilePosition = CurrentSelectedTile.LocalPosition + directionToMoveTowards;
+
+        if( !CurrentMap.GridMap.IsIndexInMap( targetTilePosition.x, targetTilePosition.y )  )
+        {
+            return;
+        }
+
+        transform.position = CurrentMap.GridMap[targetTilePosition.x, targetTilePosition.y].WorldPosition;
+
+    }
+}
+
+/*
+ * 
+ *         if( CurrentSelectedEntity is Character )
         {
             _cursorGraphicHandler.transform.position = CurrentSelectedTile.WorldPosition;
             _cursorGraphicHandler.SetCursorSprite( _selectionSprite );
@@ -41,7 +64,8 @@ public class CursorController : CursorListener
 
         _cursorGraphicHandler.SetCursorSprite( _unselectedSprite );
         //_inventoryUIContainer.Disable();
-
-    }
-
-}
+ * 
+ * 
+ * 
+ * 
+ */

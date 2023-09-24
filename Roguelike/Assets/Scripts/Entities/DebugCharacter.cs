@@ -19,9 +19,9 @@ public class DebugCharacter : Character, ITurnAgent
         }
 
 
-        Inventory = new Inventory<Item>( _maxInventorySize );
+        Inventory = new Inventory<ItemStack>( _maxInventorySize );
 
-        Inventory.TryAddNext( new Item( 120001 ) );
+        Inventory.TryAddNext( new ItemStack( 120001, 1 ) );
 
         Roguelike.Instance.GameManager.TurnHandler.AddAgent( this );
 

@@ -1,10 +1,10 @@
 using UnityEngine;
 
+// More lazy-instantiation as seen in the Roguelike singleton - this is especially important for
+// The asset manager as this is where the game sources ALL data from.
+
 public class AssetManager : MonoBehaviour
 {
-    // More lazy-instantiation as seen in the Roguelike singleton - this is especially important for
-    // The asset manager as this is where the game sources ALL data from.
-
     private ItemLookupTable _itemTable { get; init; }
     public ItemLookupTable ItemLookupTable
     {

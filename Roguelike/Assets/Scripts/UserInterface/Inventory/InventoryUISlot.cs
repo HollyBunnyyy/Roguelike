@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +7,9 @@ public class InventoryUISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     [SerializeField]
     private Image _graphic;
+
+    [SerializeField]
+    public TMP_Text _stackAmount;
 
     [SerializeField]
     private RectTransform _slot;

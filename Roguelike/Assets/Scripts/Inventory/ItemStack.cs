@@ -1,13 +1,11 @@
-public struct ItemStack<T> where T : class
+public class ItemStack
 {
-    public readonly T Item;
-    public readonly int Count;
+    public readonly int ItemID;
+    public readonly int Amount;
 
-    public ItemStack( T item, int count )
+    public ItemStack( int itemID, int amount )
     {
-        this.Item = item;
-        this.Count = count;
-
+        this.ItemID = itemID;
+        this.Amount = amount;
     }
-
 }
